@@ -1,0 +1,9 @@
+{
+  "name":"Lofoten 2026 Roadbook",
+  "short_name":"Lofoten 2026",
+  "start_url":"./",
+  "display":"standalone",
+  "background_color":"#f4f7f8",
+  "theme_color":"#153047",
+  "description":"Roadbook dynamique du voyage aux Lofoten 2026"
+}
