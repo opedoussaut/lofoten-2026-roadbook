@@ -1,30 +1,34 @@
-# LOFOTEN 2026 — Roadbook vivant
+# Lofoten 2026 Roadbook
 
-Roadbook HTML dynamique pour Olivier, Sorya et Paddy, du 25 août au 11 septembre 2026.
+Application web progressive pour piloter le road trip du 25 août au 11 septembre 2026.
 
 ## Fonctions
 
-- itinéraire modifiable dans le navigateur ;
-- programme familial adapté à Sorya et Paddy ;
-- options sportives séparées pour Olivier ;
-- suivi de la logistique du van ;
+- itinéraire modifiable ;
+- activités famille et options Olivier ;
+- carte Leaflet/OpenStreetMap ;
+- suivi du van ;
 - journal de bord ;
-- sauvegarde locale automatique ;
-- export et import JSON ;
-- estimation GPS des kilomètres lorsque la page reste ouverte.
+- budget ;
+- suivi GPS lorsque la page reste active ;
+- fonctionnement hors ligne ;
+- synchronisation Google Sheets après configuration OAuth.
 
-## Publier avec GitHub Pages
+## Configuration Google Sheets
 
-Dans le dépôt, ouvrir **Settings → Pages** puis choisir :
+1. Créer un projet dans Google Cloud Console.
+2. Activer **Google Sheets API**.
+3. Configurer l’écran de consentement OAuth.
+4. Créer un identifiant OAuth de type **Application Web**.
+5. Ajouter l’origine JavaScript autorisée :
+   `https://opedoussaut.github.io`
+6. Copier le Client ID dans `config.js`, propriété `googleClientId`.
+7. Vérifier que `spreadsheetId` pointe sur le classeur Google Sheets du roadbook.
 
-- **Source** : Deploy from a branch
-- **Branch** : main
-- **Folder** : / (root)
+Aucun secret client ne doit être ajouté au dépôt public.
 
-L’adresse publique sera ensuite :
+## Publication
 
-https://opedoussaut.github.io/lofoten-2026-roadbook/
+GitHub Pages doit publier la branche `main`, dossier `/ (root)`.
 
-## Confidentialité
-
-Le dépôt et le site sont publics. L’adresse précise du domicile n’est pas stockée. Les modifications saisies dans le site restent dans le navigateur tant qu’elles ne sont pas exportées en JSON ou enregistrées manuellement dans GitHub.
+Site : https://opedoussaut.github.io/lofoten-2026-roadbook/
