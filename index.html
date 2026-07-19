@@ -6,158 +6,47 @@
 <meta name="theme-color" content="#153047">
 <title>Lofoten 2026 — Roadbook vivant</title>
 <style>
-:root{--navy:#153047;--blue:#285f7d;--teal:#2f7d78;--pale:#eef6f7;--line:#d9e2e7;--white:#fff;--text:#202b33;--muted:#66737d;--ok:#dff2e1;--warn:#fff1c7;--danger:#f8d6d5}
-*{box-sizing:border-box}body{margin:0;background:#f4f7f8;color:var(--text);font:15px system-ui,-apple-system,Segoe UI,sans-serif}header{padding:22px 16px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff}h1{margin:0;font-size:clamp(1.55rem,4vw,2.25rem)}header p{margin:.45rem 0 0}nav{display:flex;gap:8px;overflow:auto;padding:10px;background:#fff;position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line)}button{border:0;border-radius:9px;padding:9px 12px;background:var(--pale);font-weight:700;color:var(--navy);cursor:pointer;white-space:nowrap}button.active,.primary{background:var(--teal);color:#fff}.danger{background:var(--danger)}.view{display:none}.view.active{display:block}main{max-width:1250px;margin:auto;padding:14px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px;box-shadow:0 3px 12px #15304710}.kpi strong{font-size:1.45rem;color:var(--navy)}.small{color:var(--muted);font-size:.87rem}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.table{overflow:auto;max-height:68vh;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;background:#fff}th,td{padding:9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:var(--teal);color:#fff;position:sticky;top:0;z-index:1}td[contenteditable]{background:#fffdf5;min-width:90px}input,textarea,select{width:100%;padding:9px;border:1px solid #b8c6ce;border-radius:8px;font:inherit}textarea{min-height:80px}.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}.note{background:var(--warn);padding:10px;border-radius:9px}.ok{background:var(--ok)}progress{width:100%}.tag{display:inline-block;padding:3px 8px;border-radius:999px;background:var(--pale);font-size:.8rem;font-weight:700}.hidden{display:none}@media(max-width:650px){main{padding:8px}th,td{min-width:120px}}
+:root{--navy:#153047;--blue:#285f7d;--teal:#2f7d78;--pale:#eef6f7;--line:#d9e2e7;--text:#202b33;--muted:#66737d;--warn:#fff1c7;--danger:#f8d6d5}*{box-sizing:border-box}body{margin:0;background:#f4f7f8;color:var(--text);font:15px system-ui,-apple-system,Segoe UI,sans-serif}header{padding:22px 16px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff}h1{margin:0}header p{margin:.45rem 0 0}.tabs{position:sticky;top:0;z-index:5;display:flex;gap:8px;overflow:auto;padding:10px;background:#fff;border-bottom:1px solid var(--line)}.tabs label{padding:9px 12px;border-radius:9px;background:var(--pale);font-weight:700;color:var(--navy);cursor:pointer;white-space:nowrap}.tab-input{position:absolute;left:-9999px}.panel{display:none;max-width:1250px;margin:auto;padding:14px}#t-dashboard:checked~.tabs label[for=t-dashboard],#t-route:checked~.tabs label[for=t-route],#t-family:checked~.tabs label[for=t-family],#t-van:checked~.tabs label[for=t-van],#t-journal:checked~.tabs label[for=t-journal],#t-backup:checked~.tabs label[for=t-backup]{background:var(--teal);color:#fff}#t-dashboard:checked~main #dashboard,#t-route:checked~main #route,#t-family:checked~main #family,#t-van:checked~main #van,#t-journal:checked~main #journal,#t-backup:checked~main #backup{display:block}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px;box-shadow:0 3px 12px #15304710}.kpi strong{font-size:1.45rem;color:var(--navy)}.small{color:var(--muted);font-size:.87rem}.table{overflow:auto;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;background:#fff}th,td{padding:9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:var(--teal);color:#fff}td[contenteditable]{background:#fffdf5;min-width:90px}input,textarea,select{width:100%;padding:9px;border:1px solid #b8c6ce;border-radius:8px;font:inherit}textarea{min-height:80px}.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}button{border:0;border-radius:9px;padding:9px 12px;background:var(--pale);font-weight:700;color:var(--navy);cursor:pointer}.primary{background:var(--teal);color:#fff}.danger{background:var(--danger)}.note{background:var(--warn);padding:10px;border-radius:9px}progress{width:100%}@media(max-width:650px){.panel{padding:8px}th,td{min-width:120px}}
 </style>
 </head>
 <body>
 <header><h1>🚐 Lofoten 2026 — Roadbook vivant</h1><p>Olivier, Sorya & Paddy · 25 août → 11 septembre 2026</p></header>
-<nav id="tabs"></nav>
+<input class="tab-input" type="radio" name="tabs" id="t-dashboard" checked>
+<input class="tab-input" type="radio" name="tabs" id="t-route">
+<input class="tab-input" type="radio" name="tabs" id="t-family">
+<input class="tab-input" type="radio" name="tabs" id="t-van">
+<input class="tab-input" type="radio" name="tabs" id="t-journal">
+<input class="tab-input" type="radio" name="tabs" id="t-backup">
+<nav class="tabs"><label for="t-dashboard">Tableau de bord</label><label for="t-route">Itinéraire</label><label for="t-family">Lofoten famille</label><label for="t-van">Van</label><label for="t-journal">Journal</label><label for="t-backup">Sauvegarde</label></nav>
 <main>
-<section id="view-dashboard" class="view active"></section>
-<section id="view-route" class="view"></section>
-<section id="view-family" class="view"></section>
-<section id="view-van" class="view"></section>
-<section id="view-journal" class="view"></section>
-<section id="view-backup" class="view"></section>
+<section id="dashboard" class="panel"><div class="grid"><div class="card kpi"><span class="small">Prise du van</span><br><strong>24/08/2026 16:00</strong></div><div class="card kpi"><span class="small">Départ réel</span><br><strong>25/08/2026 tôt</strong><br>Saint-Rémy-lès-Chevreuse</div><div class="card kpi"><span class="small">Restitution</span><br><strong>11/09/2026 17:00</strong><br>Champlan</div><div class="card kpi"><span class="small">Durée</span><br><strong>18 jours</strong></div></div><div class="card" style="margin-top:12px"><h2>État actuel</h2><div class="form"><label>Date<input data-save="date" type="date" value="2026-08-25"></label><label>Position<input data-save="position" value="Saint-Rémy-lès-Chevreuse"></label><label>Énergie Olivier /5<input data-save="olivier" type="number" min="1" max="5" value="5"></label><label>Énergie Sorya /5<input data-save="sorya" type="number" min="1" max="5" value="5"></label><label>Énergie Paddy /5<input data-save="paddy" type="number" min="1" max="5" value="5"></label><label>Météo<input data-save="meteo" value="À vérifier"></label></div><label>Décision du jour<textarea data-save="decision">Suivre le plan initial</textarea></label><button class="primary" id="save-all">Enregistrer</button></div><div class="card note" style="margin-top:12px"><b>Principe :</b> le voyage est conçu d’abord pour Sorya et Paddy. Aucune activité familiale exposée ou très raide.</div></section>
+<section id="route" class="panel"><div class="card"><h2>Itinéraire modifiable</h2><p class="small">Clique dans une cellule pour la modifier, puis utilise « Enregistrer ».</p><div class="table"><table id="route-table"><thead><tr><th>Date</th><th>Départ</th><th>Arrivée</th><th>Km</th><th>Heures</th><th>Type</th><th>Plan A</th><th>Plan B</th></tr></thead><tbody>
+<tr><td contenteditable>25/08</td><td contenteditable>Saint-Rémy-lès-Chevreuse</td><td contenteditable>Hambourg</td><td contenteditable>700</td><td contenteditable>7.3</td><td contenteditable>Exceptionnelle</td><td contenteditable>Transit direct</td><td contenteditable>Arrêt avant Brême</td></tr>
+<tr><td contenteditable>26/08</td><td contenteditable>Hambourg</td><td contenteditable>Jönköping</td><td contenteditable>650</td><td contenteditable>7</td><td contenteditable>Exceptionnelle</td><td contenteditable>Danemark, ponts, Malmö</td><td contenteditable>Stopper à Helsingborg</td></tr>
+<tr><td contenteditable>27/08</td><td contenteditable>Jönköping</td><td contenteditable>Gävle</td><td contenteditable>520</td><td contenteditable>5.8</td><td contenteditable>Normale</td><td contenteditable>Contourner Stockholm</td><td contenteditable>Nuit plus au sud</td></tr>
+<tr><td contenteditable>28/08</td><td contenteditable>Gävle</td><td contenteditable>Umeå / Skellefteå</td><td contenteditable>590</td><td contenteditable>6.2</td><td contenteditable>Normale</td><td contenteditable>E4 vers le nord</td><td contenteditable>Stop avant Umeå</td></tr>
+<tr><td contenteditable>29/08</td><td contenteditable>Umeå / Skellefteå</td><td contenteditable>Kiruna / Abisko</td><td contenteditable>620</td><td contenteditable>6.5</td><td contenteditable>Soutenue</td><td contenteditable>Transit Laponie</td><td contenteditable>Stop à Gällivare</td></tr>
+<tr><td contenteditable>30/08</td><td contenteditable>Kiruna / Abisko</td><td contenteditable>Kabelvåg / Svolvær</td><td contenteditable>410</td><td contenteditable>5.5</td><td contenteditable>Normale</td><td contenteditable>Narvik puis E10</td><td contenteditable>Nuit à Narvik</td></tr>
+<tr><td contenteditable>31/08</td><td contenteditable>Kabelvåg</td><td contenteditable>Kabelvåg</td><td contenteditable>60</td><td contenteditable>1.5</td><td contenteditable>Lofoten</td><td contenteditable>Henningsvær et plages</td><td contenteditable>Villages et cafés</td></tr>
+<tr><td contenteditable>01/09</td><td contenteditable>Kabelvåg</td><td contenteditable>Leknes / Ballstad</td><td contenteditable>150</td><td contenteditable>3</td><td contenteditable>Lofoten</td><td contenteditable>Unstad, Haukland, Uttakleiv</td><td contenteditable>Réduire à deux lieux</td></tr>
+<tr><td contenteditable>02/09</td><td contenteditable>Leknes / Ballstad</td><td contenteditable>Reine / Sørvågen</td><td contenteditable>120</td><td contenteditable>3</td><td contenteditable>Lofoten</td><td contenteditable>Ramberg, Nusfjord, Hamnøy</td><td contenteditable>Villages si pluie</td></tr>
+<tr><td contenteditable>03/09</td><td contenteditable>Reine / Sørvågen</td><td contenteditable>Reine / Sørvågen</td><td contenteditable>40</td><td contenteditable>1</td><td contenteditable>Lofoten</td><td contenteditable>Hamnøy, Reine, Å</td><td contenteditable>Musées et cafés</td></tr>
+<tr><td contenteditable>04/09</td><td contenteditable>Reine / Sørvågen</td><td contenteditable>Reine / Sørvågen</td><td contenteditable>50</td><td contenteditable>1</td><td contenteditable>Lofoten</td><td contenteditable>Journée météo flexible</td><td contenteditable>Repos</td></tr>
+<tr><td contenteditable>05/09</td><td contenteditable>Reine / Sørvågen</td><td contenteditable>Fauske</td><td contenteditable>550</td><td contenteditable>6.5</td><td contenteditable>Soutenue</td><td contenteditable>E10, Narvik, E6</td><td contenteditable>Stop à Narvik</td></tr>
+<tr><td contenteditable>06/09</td><td contenteditable>Fauske</td><td contenteditable>Mosjøen</td><td contenteditable>390</td><td contenteditable>5.8</td><td contenteditable>Normale</td><td contenteditable>Saltfjellet</td><td contenteditable>Nuit à Mo i Rana</td></tr>
+<tr><td contenteditable>07/09</td><td contenteditable>Mosjøen</td><td contenteditable>Trondheim</td><td contenteditable>390</td><td contenteditable>6</td><td contenteditable>Normale</td><td contenteditable>E6 vers le sud</td><td contenteditable>Stop avant Trondheim</td></tr>
+<tr><td contenteditable>08/09</td><td contenteditable>Trondheim</td><td contenteditable>Lillehammer / Vinstra</td><td contenteditable>360</td><td contenteditable>5.8</td><td contenteditable>Normale</td><td contenteditable>Dovrefjell</td><td contenteditable>Nuit à Vinstra</td></tr>
+<tr><td contenteditable>09/09</td><td contenteditable>Lillehammer</td><td contenteditable>Göteborg sud</td><td contenteditable>460</td><td contenteditable>5.8</td><td contenteditable>Normale</td><td contenteditable>Oslo puis transit</td><td contenteditable>Stop avant Göteborg</td></tr>
+<tr><td contenteditable>10/09</td><td contenteditable>Göteborg</td><td contenteditable>Hanovre / Münster</td><td contenteditable>750</td><td contenteditable>7.5</td><td contenteditable>Exceptionnelle</td><td contenteditable>Danemark puis Allemagne</td><td contenteditable>Stop à Hambourg</td></tr>
+<tr><td contenteditable>11/09</td><td contenteditable>Hanovre / Münster</td><td contenteditable>Champlan</td><td contenteditable>650</td><td contenteditable>6.3</td><td contenteditable>Soutenue</td><td contenteditable>Plein, nettoyage, restitution 17 h</td><td contenteditable>Départ très tôt</td></tr>
+</tbody></table></div><button class="primary" id="save-route" style="margin-top:10px">Enregistrer l’itinéraire</button></div></section>
+<section id="family" class="panel"><div class="card"><h2>Programme familial — Sorya & Paddy en priorité</h2><div class="table"><table id="family-table"><thead><tr><th>Activité</th><th>Secteur</th><th>Niveau</th><th>Durée</th><th>Terrain</th><th>Paddy</th></tr></thead><tbody><tr><td contenteditable>Henningsvær et son port</td><td contenteditable>Est</td><td contenteditable>Famille A</td><td contenteditable>2–3 h</td><td contenteditable>Plat, aucune exposition</td><td contenteditable>Oui</td></tr><tr><td contenteditable>Rørvikstranda</td><td contenteditable>Est</td><td contenteditable>Famille A</td><td contenteditable>1 h</td><td contenteditable>Plage facile</td><td contenteditable>Oui</td></tr><tr><td contenteditable>Haukland Beach</td><td contenteditable>Centre</td><td contenteditable>Famille A</td><td contenteditable>1–2 h</td><td contenteditable>Plage et marche libre</td><td contenteditable>Oui</td></tr><tr><td contenteditable>Haukland → Uttakleiv, ancienne route</td><td contenteditable>Centre</td><td contenteditable>Famille B</td><td contenteditable>2–3 h</td><td contenteditable>Progressif, sans crête</td><td contenteditable>Selon énergie</td></tr><tr><td contenteditable>Nusfjord</td><td contenteditable>Sud</td><td contenteditable>Famille A</td><td contenteditable>2–3 h</td><td contenteditable>Village, marches courtes</td><td contenteditable>Oui</td></tr><tr><td contenteditable>Hamnøy, Sakrisøy et Reine</td><td contenteditable>Sud</td><td contenteditable>Famille A</td><td contenteditable>3–4 h</td><td contenteditable>Points de vue accessibles</td><td contenteditable>Oui</td></tr><tr><td contenteditable>Sørvågen et Å</td><td contenteditable>Sud</td><td contenteditable>Famille A</td><td contenteditable>3–5 h</td><td contenteditable>Villages et sentiers courts</td><td contenteditable>Oui</td></tr></tbody></table></div><button class="primary" id="save-family" style="margin-top:10px">Enregistrer</button></div><h2>Options Olivier</h2><div class="grid"><div class="card"><h3>Reinebringen</h3><p>Très raide. Sortie individuelle uniquement par temps sec et vent faible.</p></div><div class="card"><h3>Ryten / Kvalvika</h3><p>Longue sortie, terrain parfois humide. Ne pas l’imposer au programme familial.</p></div><div class="card"><h3>Festvågtind</h3><p>Raide et potentiellement exposé.</p></div><div class="card"><h3>Mannen</h3><p>Crête avec sensation de vide possible.</p></div></div></section>
+<section id="van" class="panel"><div class="grid"><div class="card"><h3>Carburant %</h3><input data-save="fuel" type="number" min="0" max="100" value="100"></div><div class="card"><h3>Eau propre %</h3><input data-save="water" type="number" min="0" max="100" value="100"></div><div class="card"><h3>Eaux grises %</h3><input data-save="grey" type="number" min="0" max="100" value="0"></div><div class="card"><h3>Batterie %</h3><input data-save="battery" type="number" min="0" max="100" value="100"></div></div><div class="card" style="margin-top:12px"><div class="form"><label>Toilettes<select data-save="toilet"><option>OK</option><option>À vider</option><option>À traiter</option></select></label><label>Action suivante<input data-save="van-next" value="Contrôle complet avant départ"></label></div><button class="primary" id="save-van">Enregistrer</button></div></section>
+<section id="journal" class="panel"><div class="card"><h2>Journal de bord</h2><div class="form"><input id="j-date" type="date" value="2026-08-25"><input id="j-place" placeholder="Lieu"><input id="j-km" type="number" placeholder="Km"><input id="j-weather" placeholder="Météo"></div><textarea id="j-highlight" placeholder="Moment fort"></textarea><textarea id="j-issue" placeholder="Aléa / décision"></textarea><button class="primary" id="add-journal">Ajouter</button></div><div id="journal-list" class="card" style="margin-top:12px"></div></section>
+<section id="backup" class="panel"><div class="grid"><div class="card"><h2>Sauvegarde locale</h2><p>Les modifications sont enregistrées dans ce navigateur.</p><button class="primary" id="export-json">Exporter JSON</button></div><div class="card"><h2>Réinitialisation</h2><button class="danger" id="reset-local">Effacer les données locales</button></div></div></section>
 </main>
-<input id="import-file" type="file" accept="application/json" class="hidden">
 <script>
-'use strict';
-const STORAGE_KEY='lofoten2026-roadbook-v2';
-const LEGACY_KEY='lofoten2026-roadbook';
-const base={
- meta:{pickup:'24/08/2026 16:00',start:'25/08/2026 tôt',return:'11/09/2026 17:00',from:'Saint-Rémy-lès-Chevreuse',to:'Champlan'},
- current:{date:'2026-08-25',place:'Saint-Rémy-lès-Chevreuse',olivier:5,sorya:5,paddy:5,weather:'À vérifier',decision:'Suivre le plan initial'},
- route:[
- ['25/08','Saint-Rémy-lès-Chevreuse','Hambourg',700,7.3,'Exceptionnelle','Transit direct','Arrêt avant Brême'],
- ['26/08','Hambourg','Jönköping',650,7,'Exceptionnelle','Danemark, ponts, Malmö','Stopper à Helsingborg'],
- ['27/08','Jönköping','Gävle',520,5.8,'Normale','Contourner Stockholm','Nuit plus au sud'],
- ['28/08','Gävle','Umeå / Skellefteå',590,6.2,'Normale','E4 vers le nord','Stop avant Umeå'],
- ['29/08','Umeå / Skellefteå','Kiruna / Abisko',620,6.5,'Soutenue','Transit Laponie','Stop à Gällivare'],
- ['30/08','Kiruna / Abisko','Kabelvåg / Svolvær',410,5.5,'Normale','Narvik puis E10, sans ferry','Nuit à Narvik'],
- ['31/08','Kabelvåg','Kabelvåg',60,1.5,'Lofoten','Henningsvær et plages','Villages et cafés'],
- ['01/09','Kabelvåg','Leknes / Ballstad',150,3,'Lofoten','Unstad, Haukland, Uttakleiv','Réduire à deux lieux'],
- ['02/09','Leknes / Ballstad','Reine / Sørvågen',120,3,'Lofoten','Ramberg, Nusfjord, Hamnøy','Villages si pluie'],
- ['03/09','Reine / Sørvågen','Reine / Sørvågen',40,1,'Lofoten','Hamnøy, Reine, Å','Musées et cafés'],
- ['04/09','Reine / Sørvågen','Reine / Sørvågen',50,1,'Lofoten','Journée météo flexible','Repos ou visite douce'],
- ['05/09','Reine / Sørvågen','Fauske',550,6.5,'Soutenue','E10, Narvik, E6','Stop à Narvik'],
- ['06/09','Fauske','Mosjøen',390,5.8,'Normale','Saltfjellet','Nuit à Mo i Rana'],
- ['07/09','Mosjøen','Trondheim',390,6,'Normale','E6 vers le sud','Stop avant Trondheim'],
- ['08/09','Trondheim','Lillehammer / Vinstra',360,5.8,'Normale','Dovrefjell','Nuit à Vinstra'],
- ['09/09','Lillehammer','Göteborg sud',460,5.8,'Normale','Oslo puis transit','Stop avant Göteborg'],
- ['10/09','Göteborg','Hanovre / Münster',750,7.5,'Exceptionnelle','Danemark puis Allemagne','Stop à Hambourg'],
- ['11/09','Hanovre / Münster','Champlan',650,6.3,'Soutenue','Plein, nettoyage, restitution 17 h','Départ très tôt']
- ],
- family:[
- ['Henningsvær et son port','Est','Famille A','2–3 h','Plat, aucune exposition','Oui'],
- ['Rørvikstranda','Est','Famille A','1 h','Plage facile','Oui'],
- ['Austnesfjorden — point de vue','Est','Famille A','30–60 min','Accès très simple','Oui'],
- ['Haukland Beach','Centre','Famille A','1–2 h','Plage et marche libre','Oui'],
- ['Haukland → Uttakleiv par l’ancienne route','Centre','Famille B','2–3 h','Progressif, sans crête','Selon énergie'],
- ['Unstad','Centre','Famille A','1–2 h','Plage et village','Oui'],
- ['Ballstad et port','Centre','Famille A','1–2 h','Promenade souple','Oui'],
- ['Nusfjord','Sud','Famille A','2–3 h','Village, marches courtes','Oui'],
- ['Hamnøy, Sakrisøy et Reine','Sud','Famille A','3–4 h','Points de vue accessibles','Oui'],
- ['Sørvågen et Å','Sud','Famille A','3–5 h','Villages et sentiers courts','Oui']
- ],
- olivier:[
- ['Reinebringen','Très raide et nombreux escaliers. Sortie individuelle uniquement par temps sec et vent faible.'],
- ['Ryten / Kvalvika','Longue sortie et terrain parfois humide. Ne pas l’imposer au programme familial.'],
- ['Festvågtind','Raide et potentiellement exposé. Option individuelle seulement.'],
- ['Mannen','Crête avec sensation de vide possible. Option individuelle uniquement.']
- ],
- van:{fuel:100,water:100,grey:0,battery:100,toilet:'OK',next:'Contrôle complet avant départ'},
- journal:[],track:{km:0,points:[]}
-};
-function cloneBase(){return JSON.parse(JSON.stringify(base));}
-function loadState(){
- try{
-  const raw=localStorage.getItem(STORAGE_KEY)||localStorage.getItem(LEGACY_KEY);
-  if(!raw)return cloneBase();
-  const parsed=JSON.parse(raw);
-  return {...cloneBase(),...parsed,meta:{...base.meta,...(parsed.meta||{})},current:{...base.current,...(parsed.current||{})},van:{...base.van,...(parsed.van||{})},track:{...base.track,...(parsed.track||{})}};
- }catch(e){console.error(e);return cloneBase();}
-}
-let state=loadState();
-function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
-function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function el(id){return document.getElementById(id);}
-function totalKm(){return state.route.reduce((sum,row)=>sum+(Number(row[3])||0),0);}
-const tabDefs=[['dashboard','Tableau de bord'],['route','Itinéraire'],['family','Lofoten famille'],['van','Van'],['journal','Journal'],['backup','Sauvegarde']];
-const renderers={dashboard:renderDashboard,route:renderRoute,family:renderFamily,van:renderVan,journal:renderJournal,backup:renderBackup};
-function initTabs(){
- const nav=el('tabs');nav.innerHTML='';
- tabDefs.forEach(([id,label],index)=>{const b=document.createElement('button');b.textContent=label;b.dataset.tab=id;if(index===0)b.classList.add('active');b.addEventListener('click',()=>showTab(id));nav.appendChild(b);});
-}
-function showTab(id){
- document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
- document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));
- el('view-'+id).classList.add('active');
- renderers[id]();
-}
-function renderDashboard(){
- el('view-dashboard').innerHTML=`
- <div class="grid">
-  <div class="card kpi"><span class="small">Prise du van</span><br><strong>${esc(state.meta.pickup)}</strong></div>
-  <div class="card kpi"><span class="small">Départ réel</span><br><strong>${esc(state.meta.start)}</strong><br>${esc(state.meta.from)}</div>
-  <div class="card kpi"><span class="small">Restitution</span><br><strong>${esc(state.meta.return)}</strong><br>${esc(state.meta.to)}</div>
-  <div class="card kpi"><span class="small">Distance prévue</span><br><strong>${totalKm().toLocaleString('fr-FR')} km</strong></div>
-  <div class="card kpi"><span class="small">GPS enregistré</span><br><strong>${Number(state.track.km||0).toFixed(1)} km</strong></div>
- </div>
- <div class="grid" style="margin-top:12px">
-  <div class="card"><h2>État actuel</h2><div class="form">
-   <label>Date<input id="cur-date" type="date" value="${esc(state.current.date)}"></label>
-   <label>Position<input id="cur-place" value="${esc(state.current.place)}"></label>
-   <label>Énergie Olivier /5<input id="cur-o" type="number" min="1" max="5" value="${state.current.olivier}"></label>
-   <label>Énergie Sorya /5<input id="cur-s" type="number" min="1" max="5" value="${state.current.sorya}"></label>
-   <label>Énergie Paddy /5<input id="cur-p" type="number" min="1" max="5" value="${state.current.paddy}"></label>
-   <label>Météo<input id="cur-w" value="${esc(state.current.weather)}"></label>
-  </div><label>Décision du jour<textarea id="cur-d">${esc(state.current.decision)}</textarea></label>
-  <button class="primary" id="save-current">Enregistrer l’état</button></div>
-  <div class="card"><h2>Suivi GPS</h2><p class="small">Le suivi fonctionne lorsque la page reste ouverte. Les navigateurs mobiles peuvent suspendre le GPS en arrière-plan.</p><div class="toolbar"><button class="primary" id="gps-start">Démarrer</button><button id="gps-stop">Arrêter</button><button class="danger" id="gps-reset">Réinitialiser</button></div><div id="gps-status" class="note">Suivi inactif</div></div>
- </div>
- <div class="card" style="margin-top:12px"><b>Règle principale :</b> le voyage est conçu d’abord pour Sorya et Paddy. Aucune activité familiale ne doit comporter de crête aérienne, de passage exposé ou de pente extrême.</div>`;
- el('save-current').onclick=()=>{state.current={date:el('cur-date').value,place:el('cur-place').value,olivier:+el('cur-o').value,sorya:+el('cur-s').value,paddy:+el('cur-p').value,weather:el('cur-w').value,decision:el('cur-d').value};save();};
- el('gps-start').onclick=startGPS;el('gps-stop').onclick=stopGPS;el('gps-reset').onclick=()=>{if(confirm('Effacer le trajet GPS ?')){state.track={km:0,points:[]};save();renderDashboard();}};
-}
-function cell(rowIndex,colIndex,value,numeric=false){return `<td contenteditable="true" data-row="${rowIndex}" data-col="${colIndex}" data-numeric="${numeric}">${esc(value)}</td>`;}
-function renderRoute(){
- const rows=state.route.map((r,i)=>`<tr>${r.map((v,j)=>cell(i,j,v,j===3||j===4)).join('')}<td><button class="danger" data-delete="${i}">×</button></td></tr>`).join('');
- el('view-route').innerHTML=`<div class="card"><h2>Itinéraire modifiable</h2><p class="small">Clique dans une cellule pour la modifier. La sauvegarde se fait lorsque tu quittes la cellule.</p><div class="toolbar"><button class="primary" id="add-route">Ajouter une étape</button><button id="reset-route">Restaurer l’itinéraire initial</button></div><div class="table"><table><thead><tr><th>Date</th><th>Départ</th><th>Arrivée</th><th>Km</th><th>Heures</th><th>Type</th><th>Plan A</th><th>Plan B</th><th></th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
- el('view-route').querySelectorAll('td[contenteditable]').forEach(td=>td.addEventListener('blur',()=>{let v=td.innerText.trim();if(td.dataset.numeric==='true')v=Number(v.replace(',','.'))||0;state.route[+td.dataset.row][+td.dataset.col]=v;save();}));
- el('view-route').querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>{state.route.splice(+b.dataset.delete,1);save();renderRoute();});
- el('add-route').onclick=()=>{state.route.push(['Date','Départ','Arrivée',0,0,'Normale','Plan A','Plan B']);save();renderRoute();};
- el('reset-route').onclick=()=>{if(confirm('Restaurer l’itinéraire initial ?')){state.route=cloneBase().route;save();renderRoute();}};
-}
-function renderFamily(){
- const rows=state.family.map((r,i)=>`<tr>${r.map((v,j)=>cell(i,j,v,false)).join('')}</tr>`).join('');
- el('view-family').innerHTML=`<div class="card"><h2>Programme familial — Sorya & Paddy en priorité</h2><p><span class="tag">Famille A</span> très accessible, plate ou presque plate. <span class="tag">Famille B</span> terrain naturel modéré, sans exposition.</p><div class="table"><table><thead><tr><th>Activité</th><th>Secteur</th><th>Catégorie</th><th>Durée</th><th>Terrain</th><th>Paddy</th></tr></thead><tbody>${rows}</tbody></table></div></div><h2>Options Olivier — séparées du programme commun</h2><div class="grid">${state.olivier.map(x=>`<div class="card"><h3>${esc(x[0])}</h3><p>${esc(x[1])}</p></div>`).join('')}</div>`;
- el('view-family').querySelectorAll('td[contenteditable]').forEach(td=>td.addEventListener('blur',()=>{state.family[+td.dataset.row][+td.dataset.col]=td.innerText.trim();save();}));
-}
-function meter(title,key){return `<div class="card"><h3>${title}</h3><progress max="100" value="${Number(state.van[key])||0}"></progress><input data-meter="${key}" type="number" min="0" max="100" value="${Number(state.van[key])||0}"></div>`;}
-function renderVan(){
- el('view-van').innerHTML=`<div class="grid">${meter('Carburant','fuel')}${meter('Eau propre','water')}${meter('Eaux grises','grey')}${meter('Batterie','battery')}</div><div class="card" style="margin-top:12px"><h2>Actions logistiques</h2><div class="form"><label>Toilettes<select id="toilet"><option>OK</option><option>À vider</option><option>À traiter</option></select></label><label>Action suivante<input id="van-next" value="${esc(state.van.next)}"></label></div><button class="primary" id="save-van">Enregistrer</button></div>`;
- el('toilet').value=state.van.toilet;
- el('save-van').onclick=()=>{document.querySelectorAll('[data-meter]').forEach(i=>state.van[i.dataset.meter]=+i.value);state.van.toilet=el('toilet').value;state.van.next=el('van-next').value;save();renderVan();};
-}
-function renderJournal(){
- const entries=state.journal.map((x,i)=>`<tr><td>${esc(x.d)}</td><td>${esc(x.p)}</td><td>${esc(x.k)}</td><td>${esc(x.m)}</td><td>${esc(x.h)}</td><td>${esc(x.a)}</td><td><button class="danger" data-jdel="${i}">×</button></td></tr>`).join('');
- el('view-journal').innerHTML=`<div class="card"><h2>Ajouter une entrée</h2><div class="form"><input id="j-date" type="date" value="${esc(state.current.date)}"><input id="j-place" placeholder="Lieu"><input id="j-km" type="number" placeholder="Km"><input id="j-weather" placeholder="Météo"></div><textarea id="j-highlight" placeholder="Moment fort"></textarea><textarea id="j-issue" placeholder="Aléa / décision"></textarea><button class="primary" id="j-add">Ajouter</button></div><div class="card" style="margin-top:12px"><div class="table"><table><thead><tr><th>Date</th><th>Lieu</th><th>Km</th><th>Météo</th><th>Moment fort</th><th>Aléa</th><th></th></tr></thead><tbody>${entries}</tbody></table></div></div>`;
- el('j-add').onclick=()=>{state.journal.unshift({d:el('j-date').value,p:el('j-place').value,k:el('j-km').value,m:el('j-weather').value,h:el('j-highlight').value,a:el('j-issue').value});save();renderJournal();};
- el('view-journal').querySelectorAll('[data-jdel]').forEach(b=>b.onclick=()=>{state.journal.splice(+b.dataset.jdel,1);save();renderJournal();});
-}
-function renderBackup(){
- el('view-backup').innerHTML=`<div class="grid"><div class="card"><h2>Sauvegarde locale</h2><p>Les modifications sont enregistrées dans ce navigateur. Exporte régulièrement un fichier JSON pour pouvoir les restaurer ailleurs.</p><div class="toolbar"><button class="primary" id="export-json">Exporter JSON</button><button id="import-json">Importer JSON</button></div></div><div class="card"><h2>Réinitialisation</h2><p>Cette action efface les modifications locales et restaure la version initiale.</p><button class="danger" id="reset-all">Tout réinitialiser</button></div><div class="card"><h2>Synchronisation GitHub</h2><p>Les modifications locales ne sont pas automatiquement publiées sur GitHub. Envoie-moi le JSON exporté pour que je mette à jour la version officielle.</p></div></div>`;
- el('export-json').onclick=exportJSON;el('import-json').onclick=()=>el('import-file').click();el('reset-all').onclick=()=>{if(confirm('Effacer toutes les modifications locales ?')){state=cloneBase();save();showTab('dashboard');}};
-}
-function exportJSON(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='lofoten-2026-roadbook.json';a.click();URL.revokeObjectURL(a.href);}
-el('import-file').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const reader=new FileReader();reader.onload=()=>{try{state=JSON.parse(reader.result);save();showTab('dashboard');alert('Import réussi.');}catch(err){alert('Fichier JSON invalide.');}};reader.readAsText(f);});
-let watchId=null;
-function distanceKm(a,b){const R=6371,dLat=(b.lat-a.lat)*Math.PI/180,dLon=(b.lon-a.lon)*Math.PI/180;const q=Math.sin(dLat/2)**2+Math.cos(a.lat*Math.PI/180)*Math.cos(b.lat*Math.PI/180)*Math.sin(dLon/2)**2;return 2*R*Math.atan2(Math.sqrt(q),Math.sqrt(1-q));}
-function startGPS(){if(!navigator.geolocation){alert('GPS indisponible.');return;}if(watchId!==null)return;const status=el('gps-status');if(status)status.textContent='Recherche de la position…';watchId=navigator.geolocation.watchPosition(pos=>{const p={lat:pos.coords.latitude,lon:pos.coords.longitude,t:Date.now(),acc:pos.coords.accuracy};const last=state.track.points.at(-1);if(last&&p.acc<100){const d=distanceKm(last,p);if(d<5)state.track.km+=d;}state.track.points.push(p);save();const box=el('gps-status');if(box)box.textContent=`GPS actif · précision ${Math.round(p.acc)} m · ${state.track.km.toFixed(1)} km`;},err=>{const box=el('gps-status');if(box)box.textContent='Erreur GPS : '+err.message;},{enableHighAccuracy:true,maximumAge:15000,timeout:20000});}
-function stopGPS(){if(watchId!==null){navigator.geolocation.clearWatch(watchId);watchId=null;}const box=el('gps-status');if(box)box.textContent='Suivi arrêté';}
-initTabs();renderDashboard();save();
+(function(){const KEY='lofoten-css-roadbook-v1';const fields=[...document.querySelectorAll('[data-save]')];function tableData(id){return [...document.querySelectorAll('#'+id+' tbody tr')].map(r=>[...r.cells].map(c=>c.innerText))}function restoreTable(id,data){if(!Array.isArray(data))return;const rows=document.querySelectorAll('#'+id+' tbody tr');data.forEach((r,i)=>{if(!rows[i])return;r.forEach((v,j)=>{if(rows[i].cells[j])rows[i].cells[j].innerText=v})})}function load(){try{const d=JSON.parse(localStorage.getItem(KEY)||'{}');fields.forEach(f=>{if(d.fields&&d.fields[f.dataset.save]!==undefined)f.value=d.fields[f.dataset.save]});restoreTable('route-table',d.route);restoreTable('family-table',d.family);renderJournal(d.journal||[])}catch(e){console.error(e)}}function collect(){const f={};fields.forEach(x=>f[x.dataset.save]=x.value);let old={};try{old=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}return{fields:f,route:tableData('route-table'),family:tableData('family-table'),journal:old.journal||[]}}function save(){localStorage.setItem(KEY,JSON.stringify(collect()));alert('Enregistré sur cet appareil.')}function renderJournal(entries){const box=document.getElementById('journal-list');box.innerHTML=entries.length?'<h2>Entrées</h2>'+entries.map(x=>'<div class="note" style="margin:8px 0"><b>'+x.date+' — '+x.place+'</b><br>'+x.km+' km · '+x.weather+'<br>'+x.highlight+'<br><i>'+x.issue+'</i></div>').join(''):'<p class="small">Aucune entrée pour le moment.</p>'}document.getElementById('save-all').onclick=save;document.getElementById('save-route').onclick=save;document.getElementById('save-family').onclick=save;document.getElementById('save-van').onclick=save;document.getElementById('add-journal').onclick=function(){let d=collect();d.journal.unshift({date:document.getElementById('j-date').value,place:document.getElementById('j-place').value,km:document.getElementById('j-km').value,weather:document.getElementById('j-weather').value,highlight:document.getElementById('j-highlight').value,issue:document.getElementById('j-issue').value});localStorage.setItem(KEY,JSON.stringify(d));renderJournal(d.journal)};document.getElementById('export-json').onclick=function(){const blob=new Blob([JSON.stringify(collect(),null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='lofoten-2026-roadbook.json';a.click();URL.revokeObjectURL(a.href)};document.getElementById('reset-local').onclick=function(){if(confirm('Effacer les données locales ?')){localStorage.removeItem(KEY);location.reload()}};load()})();
 </script>
 </body>
 </html>
