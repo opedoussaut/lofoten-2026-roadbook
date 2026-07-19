@@ -1,5 +1,5 @@
-const CACHE='lofoten-2026-v7';
-const CORE=['./','index.html','styles.css?v=7','app.js?v=7','config.js?v=7','apps-script-client.js?v=7','manifest.webmanifest?v=7'];
+const CACHE='lofoten-2026-v8';
+const CORE=['./','index.html','styles.css?v=8','enhancements.css?v=8','app.js?v=8','config.js?v=8','apps-script-client.js?v=8','enhancements.js?v=8','manifest.webmanifest?v=8'];
 
 self.addEventListener('install',event=>{
   self.skipWaiting();
@@ -18,17 +18,13 @@ self.addEventListener('fetch',event=>{
   if(request.method!=='GET')return;
   const url=new URL(request.url);
   const isAppAsset=url.origin===self.location.origin;
-
   if(request.mode==='navigate'||isAppAsset){
-    event.respondWith(
-      fetch(request).then(response=>{
-        const copy=response.clone();
-        caches.open(CACHE).then(cache=>cache.put(request,copy));
-        return response;
-      }).catch(()=>caches.match(request).then(hit=>hit||caches.match('index.html')))
-    );
+    event.respondWith(fetch(request).then(response=>{
+      const copy=response.clone();
+      caches.open(CACHE).then(cache=>cache.put(request,copy));
+      return response;
+    }).catch(()=>caches.match(request).then(hit=>hit||caches.match('index.html'))));
     return;
   }
-
   event.respondWith(caches.match(request).then(hit=>hit||fetch(request)));
 });
