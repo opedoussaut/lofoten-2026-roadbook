@@ -1,5 +1,5 @@
-const CACHE='lofoten-2026-v8';
-const CORE=['./','index.html','styles.css?v=8','enhancements.css?v=8','app.js?v=8','config.js?v=8','apps-script-client.js?v=8','enhancements.js?v=8','manifest.webmanifest?v=8'];
+const CACHE='lofoten-2026-v9';
+const CORE=['./','index.html','styles.css?v=9','enhancements.css?v=9','app.js?v=9','config.js?v=9','apps-script-client.js?v=9','enhancements.js?v=9','manifest.webmanifest?v=9'];
 
 self.addEventListener('install',event=>{
   self.skipWaiting();
