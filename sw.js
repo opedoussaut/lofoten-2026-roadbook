@@ -1,5 +1,5 @@
-const CACHE='lofoten-2026-v20';
-const CORE=['./','index.html','styles.css?v=20','enhancements.css?v=20','external-import.css?v=20','weather.css?v=20','app.js?v=20','config.js?v=20','apps-script-client.js?v=20','enhancements.js?v=20','hike-library.js?v=20','family-hikes.js?v=20','camper-map.js?v=20','potential-stops.js?v=20','manifest.webmanifest?v=20'];
+const CACHE='lofoten-2026-v21';
+const CORE=['./','index.html','styles.css?v=21','enhancements.css?v=21','external-import.css?v=21','weather.css?v=21','app.js?v=21','config.js?v=21','apps-script-client.js?v=21','enhancements.js?v=21','hike-library.js?v=21','family-hikes.js?v=21','camper-map.js?v=21','potential-stops.js?v=21','manifest.webmanifest?v=21'];
 self.addEventListener('install',event=>{self.skipWaiting();event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)));});
 self.addEventListener('activate',event=>{event.waitUntil(Promise.all([caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))),self.clients.claim()]));});
 self.addEventListener('fetch',event=>{const request=event.request;if(request.method!=='GET')return;const url=new URL(request.url);const isAppAsset=url.origin===self.location.origin;if(request.mode==='navigate'||isAppAsset){event.respondWith(fetch(request).then(response=>{const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(request,copy));return response;}).catch(()=>caches.match(request).then(hit=>hit||caches.match('index.html'))));return;}event.respondWith(caches.match(request).then(hit=>hit||fetch(request)));});
