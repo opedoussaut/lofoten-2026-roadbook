@@ -38,6 +38,25 @@
       lon:14.3221
     },
     {
+      name:'Park4Night #188958 — troisième nuit · Forsgården',
+      source:'Park4Night',
+      url:'https://park4night.com/fr/place/188958',
+      reference:'188958',
+      stopIndex:2,
+      status:'selected',
+      priority:'third-night',
+      previousStage:'Vätterledens Camping — Park4Night #359873',
+      distanceFromPrevious:'≈ 435 km',
+      driveTimeFromPrevious:'≈ 5 h 30 à 6 h hors pauses',
+      notes:'Spot retenu pour la troisième nuit : petite aire privée très appréciée, calme, au bord de la rivière et à environ 5 km de Gävle. Douze emplacements seulement : appeler avant l’arrivée est explicitement recommandé pour garantir une place. Les avis récents soulignent l’accueil, la propreté, les petites terrasses en bois, la cuisine commune et les promenades agréables avec un chien. Prévoir une protection contre les moustiques.',
+      services:['Animaux autorisés','Eau potable','Vidange eaux noires','Poubelles','Toilettes','Douches','Électricité possible','Laverie','Cuisine et espace commun','Baignade dans la rivière'],
+      price:'Environ 300 SEK la nuit selon un avis 2025 ; confirmer lors de la réservation',
+      bookingWarning:'Appeler avant l’arrivée : 12 emplacements seulement',
+      rating:'4,85/5 sur la fiche Park4Night',
+      lat:60.6747,
+      lon:17.0740
+    },
+    {
       name:'Park4Night #697896 — ancien premier arrêt potentiel',
       source:'Park4Night',
       url:'https://park4night.com/fr/place/697896',
@@ -62,14 +81,14 @@
       lon:''
     },
     {
-      name:'Park4Night #565906 — arrêt potentiel 3 pratique',
+      name:'Park4Night #565906 — ancienne option troisième nuit',
       source:'Park4Night',
       url:'https://park4night.com/fr/place/565906',
       reference:'565906',
-      stopIndex:0,
-      status:'candidate',
+      stopIndex:2,
+      status:'backup',
       priority:'efficient',
-      notes:'Arrêt moins remarquable visuellement, mais potentiellement efficace et pratique pour une étape de transit. Vérifier l’accès, les avis récents, les services, le bruit et les restrictions avant validation.',
+      notes:'Ancienne option pour la troisième nuit, conservée comme solution de secours après sélection de Forsgården.',
       lat:'',
       lon:''
     },
@@ -97,7 +116,7 @@
       String(stop.url||'').includes(`/place/${candidate.reference}`)
     );
     if(index<0){state.savedCamperStops.push(candidate);changed=true;}
-    else if(['664943','359873','347908'].includes(candidate.reference)){
+    else if(['664943','359873','188958','347908','565906'].includes(candidate.reference)){
       state.savedCamperStops[index]=Object.assign({},state.savedCamperStops[index],candidate);
       changed=true;
     }
