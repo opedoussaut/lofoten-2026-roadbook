@@ -25,6 +25,18 @@
       notes:'Deuxième arrêt potentiel. Vérifier la localisation exacte, les avis récents, les services, l’accès et les restrictions avant de l’associer définitivement à une étape.',
       lat:'',
       lon:''
+    },
+    {
+      name:'Park4Night #565906 — arrêt potentiel 3 pratique',
+      source:'Park4Night',
+      url:'https://park4night.com/fr/place/565906',
+      reference:'565906',
+      stopIndex:0,
+      status:'candidate',
+      priority:'efficient',
+      notes:'Arrêt moins remarquable visuellement, mais potentiellement efficace et pratique pour une étape de transit. Vérifier l’accès, les avis récents, les services, le bruit et les restrictions avant validation.',
+      lat:'',
+      lon:''
     }
   ];
 
