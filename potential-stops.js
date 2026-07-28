@@ -19,6 +19,25 @@
       lon:9.9179
     },
     {
+      name:'Park4Night #359873 — deuxième nuit · Vätterledens Camping',
+      source:'Park4Night',
+      url:'https://park4night.com/fr/place/359873',
+      reference:'359873',
+      stopIndex:1,
+      status:'selected',
+      priority:'second-night',
+      previousStage:'Alveslohe — Park4Night #664943',
+      distanceFromPrevious:'≈ 640 km',
+      driveTimeFromPrevious:'≈ 7 h 30 à 8 h 30 hors pauses et attente éventuelle au ferry',
+      notes:'Spot retenu pour la deuxième nuit : Vätterledens Camping à Vättersmålen, près du lac Vättern et de Gränna. Environ 640 km depuis Alveslohe selon l’itinéraire retenu à travers le Danemark. Camping naturel et calme, adapté à une nuit de transit, mais certains emplacements sont en pente et l’E4 peut être audible. La fiche annonce une fermeture au 15 août : notre passage étant prévu le 26 août, il faut impérativement confirmer l’ouverture directement auprès du camping avant le départ et conserver un plan B.',
+      services:['Animaux autorisés','Eau potable','Toilettes','Douches','Électricité possible','Laverie','Baignade et randonnées à proximité','60 places annoncées'],
+      price:'220 SEK annoncés pour le camping-car + 40 SEK pour l’électricité',
+      openingWarning:'Fiche Park4Night : fermeture annoncée au 15 août — à confirmer pour le 26 août 2026',
+      rating:'4,08/5 sur 12 avis affichés',
+      lat:57.9250,
+      lon:14.3221
+    },
+    {
       name:'Park4Night #697896 — ancien premier arrêt potentiel',
       source:'Park4Night',
       url:'https://park4night.com/fr/place/697896',
@@ -31,14 +50,14 @@
       lon:''
     },
     {
-      name:'Park4Night #347908 — arrêt potentiel 2',
+      name:'Park4Night #347908 — ancienne option deuxième nuit',
       source:'Park4Night',
       url:'https://park4night.com/fr/place/347908',
       reference:'347908',
-      stopIndex:0,
-      status:'candidate',
+      stopIndex:1,
+      status:'backup',
       priority:'review',
-      notes:'Deuxième arrêt potentiel. Vérifier la localisation exacte, les avis récents, les services, l’accès et les restrictions avant de l’associer définitivement à une étape.',
+      notes:'Ancienne option pour la deuxième nuit, conservée comme solution de secours après sélection de Vätterledens Camping.',
       lat:'',
       lon:''
     },
@@ -78,7 +97,7 @@
       String(stop.url||'').includes(`/place/${candidate.reference}`)
     );
     if(index<0){state.savedCamperStops.push(candidate);changed=true;}
-    else if(candidate.reference==='664943'){
+    else if(['664943','359873','347908'].includes(candidate.reference)){
       state.savedCamperStops[index]=Object.assign({},state.savedCamperStops[index],candidate);
       changed=true;
     }
