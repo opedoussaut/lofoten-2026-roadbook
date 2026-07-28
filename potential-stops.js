@@ -57,6 +57,25 @@
       lon:17.0740
     },
     {
+      name:'Park4Night #293420 — quatrième étape · plage de Stöcksjö, Umeå',
+      source:'Park4Night',
+      url:'https://park4night.com/fr/place/293420',
+      reference:'293420',
+      stopIndex:3,
+      status:'selected-with-warning',
+      priority:'fourth-night-review',
+      previousStage:'Forsgården — Park4Night #188958',
+      distanceFromPrevious:'≈ 500 km',
+      driveTimeFromPrevious:'≈ 5 h 45 à 6 h 30 hors pauses',
+      notes:'Spot prévu pour l’étape suivante, au bord de l’eau à Stöcksjö, au sud d’Umeå. La fiche annonce une plage agréable, un grand parking, des toilettes publiques, une aire de jeux, un espace de baignade et un environnement pratique pour une pause avec Paddy. Attention toutefois : Park4Night classe officiellement ce lieu « parking jour uniquement » et plusieurs avis signalent une interdiction de camper ou de passer la nuit. Un avis indique que le stationnement 24 h serait possible pour 20 SEK, mais les retours sont contradictoires. Vérifier impérativement la signalisation sur place et prévoir un plan B autorisé pour la nuit.',
+      services:['Animaux autorisés','Poubelles','Toilettes publiques','Baignade','Aire de jeux','Activités nautiques','Ouvert toute l’année'],
+      price:'20 SEK par jour annoncés sur la fiche',
+      overnightWarning:'Lieu officiellement classé « parking jour uniquement » ; nuit non garantie et possiblement interdite',
+      rating:'4/5 sur 5 avis affichés',
+      lat:63.7752,
+      lon:20.1949
+    },
+    {
       name:'Park4Night #697896 — ancien premier arrêt potentiel',
       source:'Park4Night',
       url:'https://park4night.com/fr/place/697896',
@@ -97,10 +116,10 @@
       source:'Park4Night',
       url:'https://park4night.com/fr/place/153403',
       reference:'153403',
-      stopIndex:0,
-      status:'candidate',
+      stopIndex:3,
+      status:'backup',
       priority:'efficient',
-      notes:'Arrêt de transit choisi pour son efficacité plutôt que pour son cadre. Vérifier les avis récents, l’autorisation de nuit, le bruit, la sécurité, les services et les restrictions avant validation.',
+      notes:'Option de secours pour la quatrième étape. Vérifier les avis récents, l’autorisation de nuit, le bruit, la sécurité, les services et les restrictions avant validation.',
       lat:'',
       lon:''
     }
@@ -116,7 +135,7 @@
       String(stop.url||'').includes(`/place/${candidate.reference}`)
     );
     if(index<0){state.savedCamperStops.push(candidate);changed=true;}
-    else if(['664943','359873','188958','347908','565906'].includes(candidate.reference)){
+    else if(['664943','359873','188958','293420','347908','565906','153403'].includes(candidate.reference)){
       state.savedCamperStops[index]=Object.assign({},state.savedCamperStops[index],candidate);
       changed=true;
     }
