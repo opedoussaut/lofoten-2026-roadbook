@@ -55,6 +55,9 @@
       services:['Animaux autorisés','Eau potable','Vidange eaux noires','Vidange eaux grises','Poubelles','Toilettes','Douches','Électricité','Wi-Fi','Laverie','Cuisine'],
       price:'430 NOK hors électricité annoncé ; électricité 50 NOK, douche chaude 10 NOK',openingInfo:'Ouvert toute l’année',rating:'4,2/5 sur 122 avis',lat:68.2171,lon:14.4474
     },
+    {name:'Park4Night #697122 — étape suivante',source:'Park4Night',url:'https://park4night.com/fr/place/697122',reference:'697122',stopIndex:7,status:'selected-pending-details',priority:'next-stage',previousStage:'Kabelvåg — Park4Night #84297',distanceFromPrevious:'À calculer',driveTimeFromPrevious:'À calculer',notes:'Étape ajoutée dans l’ordre du voyage. Détails et coordonnées à vérifier sur la fiche Park4Night.',services:['À vérifier'],price:'À vérifier',lat:'',lon:''},
+    {name:'Park4Night #81739 — étape suivante',source:'Park4Night',url:'https://park4night.com/fr/place/81739',reference:'81739',stopIndex:8,status:'selected-pending-details',priority:'next-stage',previousStage:'Park4Night #697122',distanceFromPrevious:'À calculer',driveTimeFromPrevious:'À calculer',notes:'Étape ajoutée dans l’ordre du voyage. Détails, accès, services et avis récents à vérifier sur la fiche Park4Night.',services:['À vérifier'],price:'À vérifier',lat:'',lon:''},
+    {name:'Park4Night #610111 — étape suivante',source:'Park4Night',url:'https://park4night.com/fr/place/610111',reference:'610111',stopIndex:9,status:'selected-pending-details',priority:'next-stage',previousStage:'Park4Night #81739',distanceFromPrevious:'À calculer',driveTimeFromPrevious:'À calculer',notes:'Étape ajoutée dans l’ordre du voyage. Vérifier en priorité les conditions d’accès avec un camping-car de 3,01 m de haut, ainsi que l’autorisation de nuit et les avis récents.',services:['À vérifier'],price:'À vérifier',vehicleHeightCheck:true,lat:'',lon:''},
     {name:'Park4Night #697896 — ancien premier arrêt potentiel',source:'Park4Night',url:'https://park4night.com/fr/place/697896',reference:'697896',stopIndex:0,status:'backup',priority:'review',notes:'Ancienne option pour la première nuit, conservée comme solution de secours.',lat:'',lon:''},
     {name:'Park4Night #347908 — ancienne option deuxième nuit',source:'Park4Night',url:'https://park4night.com/fr/place/347908',reference:'347908',stopIndex:1,status:'backup',priority:'review',notes:'Ancienne option pour la deuxième nuit.',lat:'',lon:''},
     {name:'Park4Night #565906 — ancienne option troisième nuit',source:'Park4Night',url:'https://park4night.com/fr/place/565906',reference:'565906',stopIndex:2,status:'backup',priority:'efficient',notes:'Ancienne option pour la troisième nuit.',lat:'',lon:''},
@@ -64,7 +67,7 @@
   if(typeof state==='undefined')return;
   if(!Array.isArray(state.savedCamperStops))state.savedCamperStops=[];
   let changed=false;
-  const managed=['664943','359873','188958','293420','696328','121761','84297','347908','565906','153403'];
+  const managed=['664943','359873','188958','293420','696328','121761','84297','697122','81739','610111','347908','565906','153403'];
   candidates.forEach(candidate=>{
     const index=state.savedCamperStops.findIndex(stop=>String(stop.reference||'').includes(candidate.reference)||String(stop.url||'').includes(`/place/${candidate.reference}`));
     if(index<0){state.savedCamperStops.push(candidate);changed=true;}
