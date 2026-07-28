@@ -3,14 +3,30 @@
 (function seedPotentialStops(){
   const candidates=[
     {
-      name:'Park4Night #697896 — premier arrêt potentiel',
+      name:'Park4Night #664943 — première nuit · Alveslohe',
+      source:'Park4Night',
+      url:'https://park4night.com/fr/place/664943',
+      reference:'664943',
+      stopIndex:0,
+      status:'selected',
+      priority:'first-night',
+      previousStage:'Saint-Rémy-lès-Chevreuse',
+      distanceFromPrevious:'≈ 900 km',
+      driveTimeFromPrevious:'≈ 9 h 30 à 10 h 30 hors pauses',
+      notes:'Nouveau spot retenu pour la première nuit : grand parking gratuit près de la piscine extérieure à Alveslohe, annoncé calme et proche de l’A7. Environ 900 km depuis Saint-Rémy-lès-Chevreuse. Attention : la fiche Park4Night le classe « parking jour uniquement » ; vérifier impérativement la signalisation et l’autorisation de nuit à l’arrivée. Sol partiellement herbe/gravier, potentiellement moins adapté après forte pluie.',
+      services:['Gratuit','25 places annoncées','Ouvert toute l’année','Proche A7','Poubelles et sacs pour chiens signalés','Piscine extérieure à proximité'],
+      lat:53.7830,
+      lon:9.9179
+    },
+    {
+      name:'Park4Night #697896 — ancien premier arrêt potentiel',
       source:'Park4Night',
       url:'https://park4night.com/fr/place/697896',
       reference:'697896',
       stopIndex:0,
-      status:'candidate',
+      status:'backup',
       priority:'review',
-      notes:'Premier arrêt potentiel du voyage. Ouvrir la fiche Park4Night pour vérifier la localisation, les avis récents, les services et les restrictions avant de le sélectionner.',
+      notes:'Ancienne option pour la première nuit, conservée comme solution de secours.',
       lat:'',
       lon:''
     },
@@ -57,11 +73,15 @@
 
   let changed=false;
   candidates.forEach(candidate=>{
-    const exists=state.savedCamperStops.some(stop=>
+    const index=state.savedCamperStops.findIndex(stop=>
       String(stop.reference||'').includes(candidate.reference)||
       String(stop.url||'').includes(`/place/${candidate.reference}`)
     );
-    if(!exists){state.savedCamperStops.push(candidate);changed=true;}
+    if(index<0){state.savedCamperStops.push(candidate);changed=true;}
+    else if(candidate.reference==='664943'){
+      state.savedCamperStops[index]=Object.assign({},state.savedCamperStops[index],candidate);
+      changed=true;
+    }
   });
 
   if(changed&&typeof save==='function')save();
