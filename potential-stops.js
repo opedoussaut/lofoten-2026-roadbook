@@ -37,6 +37,18 @@
       notes:'Arrêt moins remarquable visuellement, mais potentiellement efficace et pratique pour une étape de transit. Vérifier l’accès, les avis récents, les services, le bruit et les restrictions avant validation.',
       lat:'',
       lon:''
+    },
+    {
+      name:'Park4Night #153403 — arrêt potentiel 4 pratique',
+      source:'Park4Night',
+      url:'https://park4night.com/fr/place/153403',
+      reference:'153403',
+      stopIndex:0,
+      status:'candidate',
+      priority:'efficient',
+      notes:'Arrêt de transit choisi pour son efficacité plutôt que pour son cadre. Vérifier les avis récents, l’autorisation de nuit, le bruit, la sécurité, les services et les restrictions avant validation.',
+      lat:'',
+      lon:''
     }
   ];
 
