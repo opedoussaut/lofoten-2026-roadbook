@@ -1,40 +1,51 @@
 'use strict';
 
 (function initNightlyOptions(){
-  const FIRST_NIGHT={
-    date:'25/08',
-    label:'Nuit 1 · 25 août',
-    route:'Saint-Rémy-lès-Chevreuse → nord de l’Allemagne',
-    preferred:{
-      name:'Park4Night #53279',
-      url:'https://park4night.com/fr/place/53279',
-      role:'Choix préféré',
-      status:'preferred'
+  const NIGHTS={
+    '25/08':{
+      date:'25/08',label:'Nuit 1 · 25 août',route:'Saint-Rémy-lès-Chevreuse → nord de l’Allemagne',
+      preferred:{name:'Park4Night #53279',url:'https://park4night.com/fr/place/53279',role:'Choix préféré',status:'preferred'},
+      alternatives:[
+        {name:'Park4Night #417435',url:'https://park4night.com/fr/place/417435',role:'Alternative 1',status:'alternative'},
+        {name:'Park4Night #453901',url:'https://park4night.com/fr/place/453901',role:'Alternative 2',status:'alternative'}
+      ]
     },
-    alternatives:[
-      {name:'Park4Night #417435',url:'https://park4night.com/fr/place/417435',role:'Alternative 1',status:'alternative'},
-      {name:'Park4Night #453901',url:'https://park4night.com/fr/place/453901',role:'Alternative 2',status:'alternative'}
-    ]
+    '26/08':{
+      date:'26/08',label:'Nuit 2 · 26 août',route:'Nord de l’Allemagne → sud de la Suède / région du Vättern',
+      preferred:{name:'Park4Night #84058',url:'https://park4night.com/fr/place/84058',role:'Choix préféré',status:'preferred'},
+      alternatives:[
+        {name:'Park4Night #698010',url:'https://park4night.com/fr/place/698010',role:'Alternative 1',status:'alternative'},
+        {name:'Park4Night #391481',url:'https://park4night.com/fr/place/391481',role:'Alternative 2',status:'alternative'}
+      ]
+    },
+    '27/08':{
+      date:'27/08',label:'Nuit 3 · 27 août',route:'Région du Vättern → Gävle',
+      preferred:{name:'Park4Night #188958',url:'https://park4night.com/fr/place/188958',role:'Choix préféré',status:'preferred'},
+      alternatives:[
+        {name:'Park4Night #214874',url:'https://park4night.com/fr/place/214874',role:'Alternative 1',status:'alternative'},
+        {name:'Park4Night #76491',url:'https://park4night.com/fr/place/76491',role:'Alternative 2',status:'alternative'}
+      ]
+    }
   };
 
   function seed(){
     if(typeof state==='undefined')return;
     if(!state.nightlyOptions||typeof state.nightlyOptions!=='object')state.nightlyOptions={};
-    state.nightlyOptions['25/08']=FIRST_NIGHT;
+    Object.assign(state.nightlyOptions,NIGHTS);
 
     if(!Array.isArray(state.savedCamperStops))state.savedCamperStops=[];
-    const ids=['550355','178968','174287','53279','417435','453901'];
+    const ids=['550355','178968','174287','53279','417435','453901','84058','698010','391481','188958','214874','76491'];
     state.savedCamperStops=state.savedCamperStops.filter(s=>{
       const ref=String(s.reference||'');
       const url=String(s.url||'');
-      const isOldFirstNight=ref==='premium-2026-08-25';
-      return !isOldFirstNight&&!ids.some(id=>ref.includes(id)||url.includes('/place/'+id));
+      const oldPremium=['premium-2026-08-25','premium-2026-08-26','premium-2026-08-27'].includes(ref);
+      return !oldPremium&&!ids.some(id=>ref===id||url.includes('/place/'+id));
     });
-    state.savedCamperStops.push(
-      {name:'25/08 · Park4Night #53279 — choix préféré',source:'Park4Night',url:FIRST_NIGHT.preferred.url,reference:'53279',stopIndex:0,status:'selected',priority:'night-preferred',date:'25/08',notes:'Choix préféré pour la première nuit.'},
-      {name:'25/08 · Park4Night #417435 — alternative 1',source:'Park4Night',url:FIRST_NIGHT.alternatives[0].url,reference:'417435',stopIndex:0,status:'backup',priority:'night-alternative-1',date:'25/08',notes:'Première alternative pour la première nuit.'},
-      {name:'25/08 · Park4Night #453901 — alternative 2',source:'Park4Night',url:FIRST_NIGHT.alternatives[1].url,reference:'453901',stopIndex:0,status:'backup',priority:'night-alternative-2',date:'25/08',notes:'Deuxième alternative pour la première nuit.'}
-    );
+
+    Object.values(NIGHTS).forEach((night,nightIndex)=>{
+      state.savedCamperStops.push({name:`${night.date} · ${night.preferred.name} — choix préféré`,source:'Park4Night',url:night.preferred.url,reference:night.preferred.name.split('#')[1],stopIndex:nightIndex,status:'selected',priority:'night-preferred',date:night.date,notes:`Choix préféré pour la nuit du ${night.date}.`});
+      night.alternatives.forEach((option,i)=>state.savedCamperStops.push({name:`${night.date} · ${option.name} — alternative ${i+1}`,source:'Park4Night',url:option.url,reference:option.name.split('#')[1],stopIndex:nightIndex,status:'backup',priority:`night-alternative-${i+1}`,date:night.date,notes:`Alternative ${i+1} pour la nuit du ${night.date}.`}));
+    });
     if(typeof save==='function')save();
   }
 
@@ -49,7 +60,7 @@
   }
 
   function panelHtml(){
-    const nights=Object.values(state.nightlyOptions||{});
+    const nights=Object.values(state.nightlyOptions||{}).sort((a,b)=>String(a.date).localeCompare(String(b.date)));
     return `<section class="card nightly-options-panel">
       <div class="nightly-options-heading"><div><p class="eyebrow">CHOIX DE NUIT</p><h2>Préféré + alternatives</h2></div><p class="muted">Un choix principal et deux solutions de repli par nuit.</p></div>
       ${nights.map(n=>`<div class="night-choice-day"><div class="night-choice-day-head"><h3>${esc(n.label)}</h3><span>${esc(n.route||'')}</span></div><div class="night-choice-grid">${optionCard(n.preferred,0)}${(n.alternatives||[]).map((o,i)=>optionCard(o,i+1)).join('')}</div></div>`).join('')}
