@@ -6,14 +6,14 @@
     label:'Nuit 1 · 25 août',
     route:'Saint-Rémy-lès-Chevreuse → nord de l’Allemagne',
     preferred:{
-      name:'Park4Night #550355',
-      url:'https://park4night.com/fr/place/550355',
+      name:'Park4Night #53279',
+      url:'https://park4night.com/fr/place/53279',
       role:'Choix préféré',
       status:'preferred'
     },
     alternatives:[
-      {name:'Park4Night #178968',url:'https://park4night.com/fr/place/178968',role:'Alternative 1',status:'alternative'},
-      {name:'Park4Night #174287',url:'https://park4night.com/fr/place/174287',role:'Alternative 2',status:'alternative'}
+      {name:'Park4Night #417435',url:'https://park4night.com/fr/place/417435',role:'Alternative 1',status:'alternative'},
+      {name:'Park4Night #453901',url:'https://park4night.com/fr/place/453901',role:'Alternative 2',status:'alternative'}
     ]
   };
 
@@ -23,7 +23,7 @@
     state.nightlyOptions['25/08']=FIRST_NIGHT;
 
     if(!Array.isArray(state.savedCamperStops))state.savedCamperStops=[];
-    const ids=['550355','178968','174287'];
+    const ids=['550355','178968','174287','53279','417435','453901'];
     state.savedCamperStops=state.savedCamperStops.filter(s=>{
       const ref=String(s.reference||'');
       const url=String(s.url||'');
@@ -31,9 +31,9 @@
       return !isOldFirstNight&&!ids.some(id=>ref.includes(id)||url.includes('/place/'+id));
     });
     state.savedCamperStops.push(
-      {name:'25/08 · Park4Night #550355 — choix préféré',source:'Park4Night',url:FIRST_NIGHT.preferred.url,reference:'550355',stopIndex:0,status:'selected',priority:'night-preferred',date:'25/08',notes:'Choix préféré pour la première nuit.'},
-      {name:'25/08 · Park4Night #178968 — alternative 1',source:'Park4Night',url:FIRST_NIGHT.alternatives[0].url,reference:'178968',stopIndex:0,status:'backup',priority:'night-alternative-1',date:'25/08',notes:'Première alternative pour la première nuit.'},
-      {name:'25/08 · Park4Night #174287 — alternative 2',source:'Park4Night',url:FIRST_NIGHT.alternatives[1].url,reference:'174287',stopIndex:0,status:'backup',priority:'night-alternative-2',date:'25/08',notes:'Deuxième alternative pour la première nuit.'}
+      {name:'25/08 · Park4Night #53279 — choix préféré',source:'Park4Night',url:FIRST_NIGHT.preferred.url,reference:'53279',stopIndex:0,status:'selected',priority:'night-preferred',date:'25/08',notes:'Choix préféré pour la première nuit.'},
+      {name:'25/08 · Park4Night #417435 — alternative 1',source:'Park4Night',url:FIRST_NIGHT.alternatives[0].url,reference:'417435',stopIndex:0,status:'backup',priority:'night-alternative-1',date:'25/08',notes:'Première alternative pour la première nuit.'},
+      {name:'25/08 · Park4Night #453901 — alternative 2',source:'Park4Night',url:FIRST_NIGHT.alternatives[1].url,reference:'453901',stopIndex:0,status:'backup',priority:'night-alternative-2',date:'25/08',notes:'Deuxième alternative pour la première nuit.'}
     );
     if(typeof save==='function')save();
   }
