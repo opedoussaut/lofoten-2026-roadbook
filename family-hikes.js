@@ -9,16 +9,86 @@ const FAMILY_HIKES=[
  {key:'haen-family',name:'Håen / Håheia',island:'Værøy',distance:'5,7 km A/R',duration:'~3 h',altitude:'438 m',effort:'2/5',grade:'Facile à modérée',paddy:'Oui, mais jamais près des falaises',caution:'Ancienne route militaire agréable; ferry nécessaire et falaises sommitales extrêmement abruptes.',url:'https://lofotenhikes.com/hike/haen-haheia-438m/',lat:67.663,lon:12.667}
 ];
 
-function familyHikePlanned(h){return state.activities.some(a=>String(a[0]).toLowerCase().includes(h.name.toLowerCase().split(' / ')[0]));}
-function familyHikeCard(h){const planned=familyHikePlanned(h);return `<article class="hike-card family-card ${planned?'planned':''}"><div class="hike-card-head"><div><span class="hike-island">${esc(h.island)}</span><h3>${esc(h.name)}</h3></div><span class="hike-status ${planned?'':'alt'}">${planned?'Planifiée':'Option famille'}</span></div><div class="hike-metrics"><span><b>${esc(h.distance)}</b><small>Distance</small></span><span><b>${esc(h.duration)}</b><small>Durée</small></span><span><b>${esc(h.altitude)}</b><small>Altitude</small></span><span><b>${esc(h.effort)}</b><small>Effort</small></span></div><p><b>${esc(h.grade)}</b> · Paddy : ${esc(h.paddy)}</p><p class="muted">${esc(h.caution)}</p><div class="toolbar"><a class="btn primary" href="${h.url}" target="_blank" rel="noopener">Voir la fiche ↗</a>${planned?`<button class="remove-family-hike" data-key="${h.key}">Retirer</button>`:`<button class="add-family-hike" data-key="${h.key}">Ajouter au programme famille</button>`}</div></article>`;}
+function familyHikePlanned(h){
+ return state.activities.some(a=>String(a[0]).toLowerCase().includes(h.name.toLowerCase().split(' / ')[0]));
+}
+
+function sourceForFamilyHike(h){
+ if(typeof hikeSourceForName!=='function')return null;
+ return hikeSourceForName(h.name)||LOFOTEN_HIKES.find(x=>x.key===h.key.replace('-family',''))||null;
+}
+
+function sourceButtons(h){
+ const source=sourceForFamilyHike(h);
+ if(!source)return `<a class="btn primary" href="${h.url}" target="_blank" rel="noopener">Description détaillée ↗</a>`;
+ return `<a class="btn" href="${source.url}" target="_blank" rel="noopener">Description LofotenHikes ↗</a><a class="btn primary" href="${source.traceUrl||source.url}" target="_blank" rel="noopener">🗺️ Tracé 2D/3D ↗</a>${source.fallbackUrl?`<a class="btn" href="${source.fallbackUrl}" target="_blank" rel="noopener">${esc(source.fallbackLabel||'Source complémentaire')} ↗</a>`:''}`;
+}
+
+function familyHikeCard(h){
+ const planned=familyHikePlanned(h),source=sourceForFamilyHike(h);
+ return `<article class="hike-card family-card ${planned?'planned':''}">
+   <div class="hike-card-head"><div><span class="hike-island">${esc(h.island)}</span><h3>${esc(h.name)}</h3></div><span class="hike-status ${planned?'':'alt'}">${planned?'Planifiée':'Option famille'}</span></div>
+   <div class="hike-metrics"><span><b>${esc(h.distance)}</b><small>Distance</small></span><span><b>${esc(h.duration)}</b><small>Durée</small></span><span><b>${esc(h.altitude)}</b><small>Altitude / dénivelé</small></span><span><b>${esc(h.effort)}</b><small>Effort</small></span></div>
+   <p><b>${esc(h.grade)}</b> · Paddy : ${esc(h.paddy)}</p>
+   <p class="muted">${esc(h.caution)}</p>
+   <div class="toolbar">${sourceButtons(h)}${planned?`<button class="remove-family-hike" data-key="${h.key}">Retirer</button>`:`<button class="add-family-hike" data-key="${h.key}">Ajouter au programme famille</button>`}</div>
+   ${source&&typeof weatherButton==='function'?weatherButton(source,'family'):''}
+ </article>`;
+}
+
+function plannedSportHikes(){
+ return LOFOTEN_HIKES.filter(h=>state.olivier.some(x=>hikeSourceForName(x[0])?.key===h.key));
+}
+
+function bindSportButtons(){
+ document.querySelectorAll('.add-hike').forEach(button=>button.onclick=()=>{
+   const h=LOFOTEN_HIKES.find(x=>x.key===button.dataset.hike);if(!h)return;
+   if(!state.olivier.some(x=>hikeSourceForName(x[0])?.key===h.key))state.olivier.push([h.name,h.caution]);
+   save();autoSync();renderFamilyPriority();
+ });
+ document.querySelectorAll('.remove-hike').forEach(button=>button.onclick=()=>{
+   const key=button.dataset.hike;state.olivier=state.olivier.filter(x=>hikeSourceForName(x[0])?.key!==key);
+   save();autoSync();renderFamilyPriority();
+ });
+}
 
 function renderFamilyPriority(){
- const plannedSport=LOFOTEN_HIKES.filter(h=>state.olivier.some(x=>hikeSourceForName(x[0])?.key===h.key));
- byId('app').innerHTML=`<section class="card priority-banner"><h2>Priorité du voyage : randonnées en famille</h2><p>Le programme principal doit convenir à Sorya et Paddy. Les randonnées sportives d’Olivier restent optionnelles et ne doivent jamais imposer le rythme familial.</p></section><section class="card hike-library"><div class="map-heading"><div><h2>Randonnées famille recommandées</h2><p class="muted">Sélection courte, accessible et répartie sur plusieurs îles. Vérifier météo, vent, boue, parking et règles pour Paddy avant chaque départ.</p></div><div class="toolbar"><a class="btn" href="https://lofotenhikes.com/difficulty/easy/" target="_blank" rel="noopener">Randonnées faciles ↗</a><a class="btn" href="https://lofotenhikes.com/map/" target="_blank" rel="noopener">Carte LofotenHikes ↗</a></div></div><div class="hike-grid">${FAMILY_HIKES.map(familyHikeCard).join('')}</div></section><section class="card"><h2>Autres activités famille déjà prévues</h2>${editableTable(state.activities,['Activité','Secteur','Catégorie','Durée','Terrain','Paddy','Latitude','Longitude'],'activities')}</section><section class="card hike-library bonus-section"><h2>Bonus Olivier — uniquement si les conditions et le planning familial le permettent</h2><p class="muted">Ces sorties ne sont pas prioritaires et peuvent être supprimées sans remettre en cause le voyage.</p><div class="hike-grid">${plannedSport.length?plannedSport.map(h=>hikeCard(h,true)).join(''):'<p class="status">Aucune randonnée sportive planifiée.</p>'}</div></section>`;
+ const plannedSport=plannedSportHikes();
+ const quiet=LOFOTEN_HIKES.filter(h=>h.quiet&&!plannedSport.some(p=>p.key===h.key));
+ const classics=LOFOTEN_HIKES.filter(h=>!h.quiet&&!plannedSport.some(p=>p.key===h.key));
+ byId('app').innerHTML=`
+   <section class="card priority-banner"><h2>Randonnées : partie essentielle du voyage</h2><p>Le programme principal privilégie les sorties compatibles avec Sorya et Paddy. Les randonnées sportives d’Olivier restent des bonus séparés, sans réduire le temps familial.</p></section>
+
+   <section class="card hike-library">
+     <div class="map-heading"><div><h2>Randonnées famille recommandées</h2><p class="muted">Les distances, durées, altitudes ou dénivelés, niveaux d’effort, contraintes pour Paddy et liens sources sont conservés.</p></div><div class="toolbar"><a class="btn" href="https://lofotenhikes.com/difficulty/easy/" target="_blank" rel="noopener">Randonnées faciles ↗</a><a class="btn" href="https://lofotenhikes.com/map/" target="_blank" rel="noopener">Carte LofotenHikes ↗</a></div></div>
+     <div class="hike-grid">${FAMILY_HIKES.map(familyHikeCard).join('')}</div>
+   </section>
+
+   <section class="card hike-library bonus-section">
+     <h2>Randonnées sportives prévues pour Olivier</h2>
+     <p class="muted">Fiches complètes avec distance, durée, sommet, effort, fréquentation, risques, description principale, tracé 2D/3D et source complémentaire.</p>
+     <div class="hike-grid">${plannedSport.length?plannedSport.map(h=>hikeCard(h,true)).join(''):'<p class="status">Aucune randonnée sportive actuellement planifiée.</p>'}</div>
+   </section>
+
+   <section class="card hike-library">
+     <h2>Pépites calmes et alternatives</h2>
+     <p class="muted">Options moins fréquentées à conserver dans le roadbook selon la météo, la fatigue et le temps disponible.</p>
+     <div class="hike-grid">${quiet.map(h=>hikeCard(h,false)).join('')}</div>
+   </section>
+
+   <section class="card hike-library">
+     <h2>Grands classiques à décider sur place</h2>
+     <p class="muted">Options plus fréquentées ou plus exigeantes. Elles ne remplacent pas le programme famille.</p>
+     <div class="hike-grid">${classics.map(h=>hikeCard(h,false)).join('')}</div>
+   </section>
+
+   <section class="card"><h2>Autres activités famille déjà prévues</h2>${editableTable(state.activities,['Activité','Secteur','Catégorie','Durée','Terrain','Paddy','Latitude','Longitude'],'activities')}</section>`;
+
  bindEditable('activities',renderFamilyPriority);
  document.querySelectorAll('.add-family-hike').forEach(b=>b.onclick=()=>{const h=FAMILY_HIKES.find(x=>x.key===b.dataset.key);if(!h||familyHikePlanned(h))return;state.activities.push([h.name,h.island,'Famille randonnée',h.duration,h.grade,h.paddy,h.lat,h.lon]);save();autoSync();renderFamilyPriority();});
  document.querySelectorAll('.remove-family-hike').forEach(b=>b.onclick=()=>{const h=FAMILY_HIKES.find(x=>x.key===b.dataset.key);if(!h)return;state.activities=state.activities.filter(a=>!String(a[0]).toLowerCase().includes(h.name.toLowerCase().split(' / ')[0]));save();autoSync();renderFamilyPriority();});
- document.querySelectorAll('.remove-hike').forEach(button=>button.onclick=()=>{const key=button.dataset.hike;state.olivier=state.olivier.filter(x=>hikeSourceForName(x[0])?.key!==key);save();autoSync();renderFamilyPriority();});
+ bindSportButtons();
+ if(typeof bindWeatherButtons==='function')bindWeatherButtons();
 }
 
 renderFamily=renderFamilyPriority;
