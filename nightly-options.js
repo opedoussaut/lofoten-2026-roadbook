@@ -25,6 +25,14 @@
         {name:'Park4Night #214874',url:'https://park4night.com/fr/place/214874',role:'Alternative 1',status:'alternative'},
         {name:'Park4Night #76491',url:'https://park4night.com/fr/place/76491',role:'Alternative 2',status:'alternative'}
       ]
+    },
+    '28/08':{
+      date:'28/08',label:'Nuit 4 · 28 août',route:'Gävle → Umeå / Skellefteå',
+      preferred:{name:'Park4Night #140798',url:'https://park4night.com/fr/place/140798',role:'Choix préféré',status:'preferred'},
+      alternatives:[
+        {name:'Park4Night #260263',url:'https://park4night.com/fr/place/260263',role:'Alternative 1',status:'alternative'},
+        {name:'Park4Night #698541',url:'https://park4night.com/fr/place/698541',role:'Alternative 2',status:'alternative'}
+      ]
     }
   };
 
@@ -34,11 +42,11 @@
     Object.assign(state.nightlyOptions,NIGHTS);
 
     if(!Array.isArray(state.savedCamperStops))state.savedCamperStops=[];
-    const ids=['550355','178968','174287','53279','417435','453901','84058','698010','391481','188958','214874','76491'];
+    const ids=['550355','178968','174287','53279','417435','453901','84058','698010','391481','188958','214874','76491','140798','260263','698541'];
     state.savedCamperStops=state.savedCamperStops.filter(s=>{
       const ref=String(s.reference||'');
       const url=String(s.url||'');
-      const oldPremium=['premium-2026-08-25','premium-2026-08-26','premium-2026-08-27'].includes(ref);
+      const oldPremium=['premium-2026-08-25','premium-2026-08-26','premium-2026-08-27','premium-2026-08-28'].includes(ref);
       return !oldPremium&&!ids.some(id=>ref===id||url.includes('/place/'+id));
     });
 
