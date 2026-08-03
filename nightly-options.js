@@ -33,6 +33,14 @@
         {name:'Park4Night #260263',url:'https://park4night.com/fr/place/260263',role:'Alternative 1',status:'alternative'},
         {name:'Park4Night #698541',url:'https://park4night.com/fr/place/698541',role:'Alternative 2',status:'alternative'}
       ]
+    },
+    '29/08':{
+      date:'29/08',label:'Nuit 5 · 29 août',route:'Umeå / Skellefteå → Abisko',
+      preferred:{name:'Abisko Mountain Lodge',url:'https://www.abiskomountainlodge.se/',role:'Choix préféré · lodge',status:'preferred'},
+      alternatives:[
+        {name:'Park4Night #133328',url:'https://park4night.com/fr/place/133328',role:'Alternative 1',status:'alternative'},
+        {name:'Park4Night #88528',url:'https://park4night.com/fr/place/88528',role:'Alternative 2',status:'alternative'}
+      ]
     }
   };
 
@@ -42,16 +50,17 @@
     Object.assign(state.nightlyOptions,NIGHTS);
 
     if(!Array.isArray(state.savedCamperStops))state.savedCamperStops=[];
-    const ids=['550355','178968','174287','53279','417435','453901','84058','698010','391481','188958','214874','76491','140798','260263','698541'];
+    const ids=['550355','178968','174287','53279','417435','453901','84058','698010','391481','188958','214874','76491','140798','260263','698541','133328','88528'];
     state.savedCamperStops=state.savedCamperStops.filter(s=>{
       const ref=String(s.reference||'');
       const url=String(s.url||'');
-      const oldPremium=['premium-2026-08-25','premium-2026-08-26','premium-2026-08-27','premium-2026-08-28'].includes(ref);
+      const oldPremium=['premium-2026-08-25','premium-2026-08-26','premium-2026-08-27','premium-2026-08-28','premium-2026-08-29'].includes(ref);
       return !oldPremium&&!ids.some(id=>ref===id||url.includes('/place/'+id));
     });
 
     Object.values(NIGHTS).forEach((night,nightIndex)=>{
-      state.savedCamperStops.push({name:`${night.date} · ${night.preferred.name} — choix préféré`,source:'Park4Night',url:night.preferred.url,reference:night.preferred.name.split('#')[1],stopIndex:nightIndex,status:'selected',priority:'night-preferred',date:night.date,notes:`Choix préféré pour la nuit du ${night.date}.`});
+      const preferredRef=night.preferred.name.includes('#')?night.preferred.name.split('#')[1]:'abisko-mountain-lodge';
+      state.savedCamperStops.push({name:`${night.date} · ${night.preferred.name} — choix préféré`,source:night.preferred.name.includes('Park4Night')?'Park4Night':'Site officiel',url:night.preferred.url,reference:preferredRef,stopIndex:nightIndex,status:'selected',priority:'night-preferred',date:night.date,notes:`Choix préféré pour la nuit du ${night.date}.`});
       night.alternatives.forEach((option,i)=>state.savedCamperStops.push({name:`${night.date} · ${option.name} — alternative ${i+1}`,source:'Park4Night',url:option.url,reference:option.name.split('#')[1],stopIndex:nightIndex,status:'backup',priority:`night-alternative-${i+1}`,date:night.date,notes:`Alternative ${i+1} pour la nuit du ${night.date}.`}));
     });
     if(typeof save==='function')save();
@@ -59,11 +68,12 @@
 
   function optionCard(option,index){
     const preferred=option.status==='preferred';
+    const linkLabel=option.url.includes('park4night.com')?'Ouvrir Park4Night ↗':'Ouvrir le site officiel ↗';
     return `<article class="night-choice ${preferred?'preferred-choice':'alternative-choice'}">
       <div class="night-choice-rank">${preferred?'⭐ PRÉFÉRÉ':'ALT. '+index}</div>
       <h4>${esc(option.name)}</h4>
       <p>${esc(option.role)}</p>
-      <a class="btn ${preferred?'primary':''}" href="${esc(option.url)}" target="_blank" rel="noopener">Ouvrir Park4Night ↗</a>
+      <a class="btn ${preferred?'primary':''}" href="${esc(option.url)}" target="_blank" rel="noopener">${linkLabel}</a>
     </article>`;
   }
 
