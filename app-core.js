@@ -14,7 +14,7 @@ const tabs=[
 
 const initial={
   meta:{pickup:'24/08/2026 16:00',start:'25/08/2026 06:00',return:'11/09/2026 17:00',from:'Chevreuse',to:'Roadsurfer · Champlan'},
-  current:{date:'2026-08-25',place:'Chevreuse',weather:'À vérifier',olivier:5,sorya:5,paddy:5,decision:'Suivre l’itinéraire officiel à un seul ferry'},
+  current:{date:'2026-08-25',place:'Chevreuse',weather:'À vérifier',olivier:5,sorya:5,paddy:5,decision:'Conserver 6 nuits dans les Lofoten puis rentrer sans aucun ferry par Björkliden, Mo i Rana, Trondheim et Oslo'},
   itinerary:[],nightlyOptions:{},activities:[],
   olivier:[['Reinebringen','Très raide; sortie individuelle uniquement.'],['Ryten / Kvalvika','Longue sortie, terrain humide possible.'],['Festvågtind','Raide et potentiellement exposé.'],['Mannen','Crête, sensation de vide possible.']],
   van:{fuel:100,water:100,grey:0,battery:100,toilet:'OK',next:'Contrôle complet avant départ'},
