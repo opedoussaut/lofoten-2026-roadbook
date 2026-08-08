@@ -35,6 +35,13 @@
       quantity:'2 boîtes sur 5',
       amount:11.84,
       note:'Commande Amazon du 04/08/2026 · 5,92 € / boîte'
+    },
+    {
+      category:'Courses · divers',
+      label:'Autres courses pour le road trip',
+      quantity:'Estimation globale',
+      amount:250,
+      note:'Budget complémentaire prévu pour les autres consommables du voyage'
     }
   ];
 
@@ -62,7 +69,7 @@
     byId('app').innerHTML=`
       <div class="grid">
         <div class="card kpi"><span class="muted">Coûts fixes déjà payés</span><br><strong>${euro(fixedTotal)}</strong><br><span>Roadsurfer inclus</span></div>
-        <div class="card kpi"><span class="muted">Courses achetées avant départ</span><br><strong>${euro(groceriesTotal)}</strong><br><span>Uniquement ce qui sera consommé pendant le voyage</span></div>
+        <div class="card kpi"><span class="muted">Courses Lofoten prévues</span><br><strong>${euro(groceriesTotal)}</strong><br><span>Courses déjà achetées + estimation des courses diverses</span></div>
         <div class="card kpi"><span class="muted">Dépenses voyage enregistrées</span><br><strong>${euro(variableTotal)}</strong><br><span>Carburant, campings, courses, péages…</span></div>
         <div class="card kpi"><span class="muted">Budget dépensé / engagé</span><br><strong>${euro(grandTotal)}</strong><br><span>Coûts fixes + courses Lofoten + dépenses enregistrées</span></div>
       </div>
