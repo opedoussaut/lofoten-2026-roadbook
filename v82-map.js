@@ -1,0 +1,8 @@
+'use strict';
+(function installV82Map(){
+  if(!window.V82)return;
+  const base=window.renderMap;
+  const f=n=>Number(n).toFixed(6),E=v=>typeof esc==='function'?esc(v):String(v??''),nav=p=>`https://www.google.com/maps/dir/?api=1&destination=${f(p.lat)},${f(p.lon)}&travelmode=driving`,osm=p=>`https://www.openstreetmap.org/?mlat=${f(p.lat)}&mlon=${f(p.lon)}#map=14/${f(p.lat)}/${f(p.lon)}`;
+  function renderMapV82(){if(typeof base==='function')base();const app=byId('app');if(!app)return;const rows=Object.entries(window.V82.points);app.insertAdjacentHTML('beforeend',`<section class="card" style="margin-top:12px"><p class="eyebrow">RETOUR V82 · 09→12 SEPTEMBRE</p><h2>Retour rééquilibré jusqu’à Champlan</h2><p>Oslo → Ishøj/Copenhague → Osnabrück → Chevreuse → Roadsurfer Champlan. Le retour reste entièrement routier, sans ferry.</p><div class="table-wrap"><table><thead><tr><th>Date</th><th>Étape</th><th>Navigation</th></tr></thead><tbody>${rows.map(([d,p])=>`<tr><td>${E(d)}</td><td><b>${E(p.name)}</b><br><span class="muted">${f(p.lat)}, ${f(p.lon)}</span></td><td><a class="btn primary" href="${nav(p)}" target="_blank" rel="noopener">🚐 Google Maps ↗</a><a class="btn" href="${osm(p)}" target="_blank" rel="noopener">OSM ↗</a></td></tr>`).join('')}</tbody></table></div><div class="popup-warning"><b>10 septembre :</b> imposer Storebælt → Kolding → Flensburg pour conserver le zéro ferry.</div></section>`);}
+  window.renderMap=renderMapV82;try{renderMap=renderMapV82}catch{}
+})();
