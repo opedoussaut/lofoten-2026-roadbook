@@ -25,6 +25,13 @@
   const norm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
   const entries=Object.entries(LINKS).map(([name,url])=>({name,url,key:norm(name)}));
 
+  function hasPark4NightLink(card,url){
+    return Array.from(card.querySelectorAll('a[href]')).some(a=>{
+      const href=(a.getAttribute('href')||'').replace(/\/$/,'');
+      return href.includes('park4night.com/') || href===url.replace(/\/$/,'');
+    });
+  }
+
   function decorate(){
     const app=document.getElementById('app');
     if(!app)return;
@@ -32,7 +39,7 @@
     cards.forEach(card=>{
       const text=norm(card.textContent);
       const match=entries.find(e=>text.includes(e.key));
-      if(!match||card.querySelector(`a[data-p4n-url="${match.url}"]`))return;
+      if(!match||hasPark4NightLink(card,match.url))return;
       const a=document.createElement('a');
       a.href=match.url;
       a.target='_blank';
