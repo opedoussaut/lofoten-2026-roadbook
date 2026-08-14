@@ -1,163 +1,155 @@
 'use strict';
 
-(function installAuditedRoadbookPlan(){
-  const PLAN_VERSION='v67-audited-road-only';
-  const P=id=>`https://park4night.com/fr/place/${id}`;
-  const GPS_RULE='Conserver « éviter les ferries » activé pendant tout le voyage. Le 6 septembre, imposer Björkliden → Abisko → Kiruna → Gällivare → Storuman → Hemavan → Mo i Rana. Le 9 septembre, imposer Göteborg → Malmö → pont de l’Øresund → pont du Grand Belt → Kolding → Flensburg.';
+(function installRoadbookPlanV83(){
+  const PLAN_VERSION='v83-ab-road-only-hike-protected';
+  const DEFAULT_VARIANT='B';
+  const GPS_RULE='Zéro ferry sur tout le voyage. Utiliser les ponts du Grand Belt et de l’Øresund. En Suède, rester sur l’axe routier rapide vers Stockholm/Umeå puis E10 via Kiruna–Abisko–Narvik. Vérifier la signalisation locale avant toute nuit gratuite.';
+  const G=q=>`https://www.google.com/maps/search/${encodeURIComponent(q)}`;
 
-  const ITINERARY=[
-    ['25/08','Chevreuse','Park4Night #53279',900,10,'Transit long','Départ très tôt vers le nord de l’Allemagne','Pauses régulières et promenade calme de Paddy avant la nuit'],
-    ['26/08','Park4Night #53279','Park4Night #84058',620,8,'Transit long','Danemark par les ponts puis sud de la Suède','Aucun ferry; pause longue au milieu de journée'],
-    ['27/08','Park4Night #84058','Forsgården #188958',435,5.8,'Transit','Étape plus douce vers Gävle','Arrivée assez tôt pour une promenade au calme'],
-    ['28/08','Forsgården #188958','Park4Night #140798',500,6.2,'Transit','Remontée vers le nord par l’E4','Ravitaillement avant les secteurs isolés'],
-    ['29/08','Park4Night #140798','Abisko Mountain Lodge',690,8.5,'Transit long','Grande traversée de la Laponie','Nuit déjà prévue avant l’entrée dans les Lofoten'],
-    ['30/08','Abisko Mountain Lodge','Hov Camping · Gimsøy',355,5.5,'Arrivée Lofoten','Narvik puis E10 jusqu’à Gimsøy','Installation pour deux nuits sans déplacer le camping-car'],
-    ['31/08','Hov Camping','Hov Camping',35,1,'Lofoten Est','Henningsvær puis Linken ou Tjeldbergtinden selon météo','Journée locale; Paddy reste avec vous sur l’option retenue'],
-    ['01/09','Hov Camping','Uttakleiv',80,1.7,'Lofoten Centre','Haukland → Uttakleiv par l’ancienne route côtière','Peu de conduite et grande promenade familiale'],
-    ['02/09','Uttakleiv','Lofoten Beach Camp',55,1.2,'Lofoten Centre-Ouest','Kvalvika ou Holandsmælen puis plage de Skagsanden','Ne choisir qu’une randonnée; arrivée assez tôt au camping'],
-    ['03/09','Lofoten Beach Camp','Moskenes Camping',50,1.2,'Lofoten Ouest','Nusfjord, Hamnøy, Sakrisøy, Reine et Å','Olivier peut faire Reinebringen tôt uniquement si les conditions sont parfaites'],
-    ['04/09','Moskenes Camping','Lofoten Beach Camp',50,1.2,'Journée météo Lofoten','Matinée libre à Reine/Å puis retour tranquille par Ramberg et Flakstad','Dernière journée complète dans les Lofoten; rattraper la randonnée prioritaire manquée'],
-    ['05/09','Lofoten Beach Camp','Björkliden Camping',370,5.5,'Sortie des Lofoten','E10 vers Leknes, Svolvær et Narvik puis camping de Björkliden','Trois pauses; nuit camping-car simple plutôt qu’un second séjour au lodge'],
-    ['06/09','Björkliden Camping','Rana Camping · Mo i Rana',862,10.7,'Très longue étape','Björkliden → Abisko → Kiruna → Gällivare → Storuman → Hemavan → E12 → Mo i Rana','Journée exceptionnelle; départ très tôt, quatre vraies pauses et aucun objectif touristique'],
-    ['07/09','Mo i Rana','Halland Camping · Rennebu',560,7.8,'Norvège E6','Saltfjellet, Mosjøen, Grong, Trondheim puis Rennebu','Arrivée au calme au sud de Trondheim; longue promenade pour Paddy'],
-    ['08/09','Rennebu','Topcamp Ekeberg · Oslo',450,6.2,'Norvège intérieure','Dovrefjell, Gudbrandsdalen puis Oslo','Journée plus équilibrée; arrivée avant la fermeture de la réception'],
-    ['09/09','Oslo','Wohnmobilhafen Hamburg Süd',1062,10.6,'Très longue étape','E6 par Göteborg et Malmö, pont de l’Øresund, Grand Belt, Kolding et Flensburg','Aucun ferry; départ avant l’aube et pauses toutes les deux heures'],
-    ['10/09','Hamburg Süd','Maison · Chevreuse',913,9.5,'Arrivée très tardive acceptée','A1/A7 vers Brême puis Pays-Bas ou Ruhr, Belgique et Île-de-France selon trafic','Arrivée possible entre 22 h et minuit; priorité absolue à la sécurité'],
-    ['11/09','Chevreuse','Roadsurfer · Champlan',25,0.7,'Restitution','Nettoyage, vidanges, plein, AdBlue et photos','Départ avec une large marge avant 17 h']
-  ];
-
-  const NIGHTS={
-    '25/08':{preferred:{name:'Park4Night #53279',url:P('53279'),role:'Première nuit confirmée.',calm:'4/5',paddy:'Promenade calme dès l’arrivée.'},alternatives:[]},
-    '26/08':{preferred:{name:'Park4Night #84058',url:P('84058'),role:'Étape confirmée dans le sud de la Suède.',calm:'4/5',paddy:'Choisir la zone la plus éloignée de la circulation.'},alternatives:[]},
-    '27/08':{preferred:{name:'Forsgården · Park4Night #188958',url:P('188958'),role:'Petite aire nature près de Gävle.',calm:'4.5/5',paddy:'Marche facile au bord de l’eau.'},alternatives:[]},
-    '28/08':{preferred:{name:'Park4Night #140798',url:P('140798'),role:'Étape avant la Laponie.',calm:'4/5',paddy:'Dernière sortie tranquille avant le coucher.'},alternatives:[]},
-    '29/08':{preferred:{name:'Abisko Mountain Lodge',url:'https://www.abiskomountainlodge.se/',role:'Nuit prévue à l’aller, avant l’entrée dans les Lofoten.',calm:'5/5',paddy:'Récupération complète après la longue traversée.'},alternatives:[]},
-    '30/08':{preferred:{name:'Hov Camping',url:'https://hovgard.no/en/camping-caravanning/',role:'Base de deux nuits sur Gimsøy.',calm:'4.5/5',paddy:'Deux nuits au même endroit pour limiter les changements.'},alternatives:[]},
-    '31/08':{preferred:{name:'Hov Camping',url:'https://hovgard.no/en/camping-caravanning/',role:'Seconde nuit sans refaire le camp.',calm:'4.5/5',paddy:'Journée locale et repos.'},alternatives:[]},
-    '01/09':{preferred:{name:'Uttakleiv · Park4Night #38914',url:P('38914'),role:'Nuit signature sur la côte.',calm:'4.5/5',paddy:'Promenade littorale adaptée selon le vent.'},alternatives:[{name:'Haukland Beach',url:'https://visitlofoten.com/en/topic/haukland-beach/',role:'Repli proche si Uttakleiv est trop exposé.'}]},
-    '02/09':{preferred:{name:'Lofoten Beach Camp',url:'https://www.lofotenbeachcamp.no/',role:'Camping directement sur la plage de Skagsanden, ouvert jusqu’au 1er novembre.',calm:'4/5',paddy:'Paddy reste avec vous; choisir une zone périphérique et respecter les règles locales.'},alternatives:[{name:'Ramberg Resort Camping',url:'https://www.rambergresort.no/campsite',role:'Alternative calme sur Ramberg Beach, ouverte jusqu’au 30 septembre.'}]},
-    '03/09':{preferred:{name:'Moskenes Camping',url:'https://moskenescamping.no/',role:'Base pratique pour Reine, Sørvågen et Å.',calm:'4/5',paddy:'Soirée calme après les villages de l’ouest.'},alternatives:[]},
-    '04/09':{preferred:{name:'Lofoten Beach Camp',url:'https://www.lofotenbeachcamp.no/',role:'Dernière nuit dans les Lofoten et meilleur positionnement pour le retour routier.',calm:'4/5',paddy:'Grande promenade de plage avant la longue route du lendemain.'},alternatives:[{name:'Ramberg Resort Camping',url:'https://www.rambergresort.no/campsite',role:'Alternative plus calme si le Beach Camp est animé.'}]},
-    '05/09':{preferred:{name:'Björkliden Camping',url:'https://bjorkliden.com/en/stay-travel/accommodation/camping/',role:'Véritable camping pour camping-car, 10 km à l’ouest d’Abisko, ouvert en saison d’automne jusqu’au 30 septembre 2026.',calm:'4.5/5',paddy:'Arrivée simple, promenade puis nuit dans votre propre camping-car.'},alternatives:[]},
-    '06/09':{preferred:{name:'Rana Camping',url:'https://mocamping.no/',role:'Camping pour bobil au bord de la rivière, ouvert en septembre.',calm:'4/5',paddy:'Klokkerhagen offre de longs chemins de promenade.'},alternatives:[{name:'Røssvoll Camping',url:'https://www.rossvollcamping.no/en/',role:'Alternative calme à 10 km au nord de Mo i Rana.'}]},
-    '07/09':{preferred:{name:'Halland Camping · Rennebu',url:'https://www.hallandcamping.no/accommodation/camping',role:'Emplacements camping-car au calme, au sud de Trondheim.',calm:'4.5/5',paddy:'Demander un emplacement périphérique et garder Paddy en laisse.'},alternatives:[]},
-    '08/09':{preferred:{name:'Topcamp Ekeberg · Oslo',url:'https://topcamp.no/en/topcamp-ekeberg/stay',role:'Camping ouvert jusqu’au 15 septembre, pratique avant la grande étape vers Hambourg.',calm:'3.5/5',paddy:'Promenade à Ekebergparken avant le coucher.'},alternatives:[{name:'Sjølyst Marina motorhome parking',url:'https://bobilparkering.no/en/pages/bobil-parkering',role:'Alternative ouverte jusqu’au 15 septembre, mais plus urbaine et potentiellement plus bruyante.'}]},
-    '09/09':{preferred:{name:'Wohnmobilhafen Hamburg Süd',url:'https://www.hamburg-travel.com/see-explore/green-hamburg/campgrounds/wohnmobilhafen-hamburg-sued/',role:'Ouvert toute l’année, à 2 km de l’A1 avec services complets.',calm:'3.5/5',paddy:'Promenade sur la digue après l’arrivée.'},alternatives:[{name:'Elbepark Bunthaus',url:'https://www.hamburg-travel.com/see-explore/green-hamburg/campgrounds/camper-van-site-elbepark-bunthaus-hamburg/',role:'Alternative plus nature au bord de l’Elbe.'}]},
-    '10/09':{preferred:{name:'Maison · Chevreuse',url:'https://www.google.com/maps/search/Chevreuse+France',role:'Arrivée obligatoire, même très tardive.',calm:'5/5',paddy:'Retour dans son environnement familier.'},alternatives:[]}
+  const ROUTES={
+    A:{
+      label:'A · Fast Track',subtitle:'On pousse fort à l’aller pour acheter une nuit supplémentaire aux Lofoten.',lofotenNights:8,
+      rows:[
+        ['25/08','Chevreuse','Hambourg / vallée de l’Elbe',900,9.0,'FAST','Longue journée assumée; pauses toutes les 2 h.','Arriver, sortir Paddy 30–45 min, dîner simple, sommeil prioritaire.'],
+        ['26/08','Hambourg','Norrköping / Bråviken',940,9.5,'FAST','Journée la plus exigeante; Danemark par les ponts puis Suède.','Aucune activité touristique; choisir une nuit accessible même tard.'],
+        ['27/08','Norrköping','Umeå',750,9.0,'FAST','Remontée E4 pure efficacité.','Grande pause déjeuner + 2 vraies promenades Paddy.'],
+        ['28/08','Umeå','Kiruna / Abisko',600,7.0,'TRANSIT','Entrée en Laponie; possibilité de pousser vers Abisko si forme parfaite.','Nuit récupération avant les Lofoten.'],
+        ['29/08','Kiruna / Abisko','Lofoten Est · Lyngvær / Gimsøy',410,5.8,'ARRIVÉE','Narvik puis E10; arrivée assez tôt pour profiter du soir.','Aucune grande randonnée ce jour.'],
+        ['30/08','Lofoten Est','Lofoten Est',35,1.0,'RANDO','Hoven prioritaire ou Festvågtind si terrain sec et vent faible.','Départ tôt si Festvågtind; Hoven = option plus calme avec Paddy.'],
+        ['31/08','Lofoten Est','Lofoten Centre · Haukland/Uttakleiv',85,1.7,'RANDO','Mannen si vent faible; sinon boucle Haukland–Uttakleiv.','Ne pas cumuler deux grosses randonnées.'],
+        ['01/09','Lofoten Centre','Lofoten Centre',35,0.8,'RANDO','Holandsmælen = randonnée prioritaire calme et panoramique.','Fenêtre météo à protéger; terrain humide = chaussures adaptées.'],
+        ['02/09','Lofoten Centre','Ramberg / Fredvang',55,1.2,'RANDO','Ryten/Kvalvika = journée forte, ~5 h.','Départ matin; vent et boue à surveiller.'],
+        ['03/09','Ramberg / Fredvang','Reine / Moskenes',50,1.2,'OUEST','Nusfjord + villages; Reinebringen seulement si sec, bonne visibilité et départ très tôt.','Garder une vraie marge météo pour Reinebringen.'],
+        ['04/09','Reine / Moskenes','Ramberg / Flakstad',50,1.2,'MÉTÉO','Journée joker randonnée: rattraper Reinebringen, Ryten ou Holandsmælen.','Une seule randonnée prioritaire + récupération.'],
+        ['05/09','Ramberg / Flakstad','Lofoten Est · Lyngvær',95,2.0,'SORTIE','Retour progressif vers l’est; arrêt Vikten coucher de soleil si conditions calmes.','Dernière nuit Lofoten placée pour faciliter le départ.'],
+        ['06/09','Lofoten Est','Kiruna',410,5.8,'RETOUR','E10 vers Narvik, Abisko, Kiruna.','Retour volontairement raisonnable.'],
+        ['07/09','Kiruna','Umeå',600,7.0,'RETOUR','Axe rapide suédois.','Pauses toutes les 2 h.'],
+        ['08/09','Umeå','Södertälje / Trosa',665,7.5,'RETOUR','E4 plein sud, contourner Stockholm.','Dormir au sud de Stockholm.'],
+        ['09/09','Södertälje / Trosa','Malmö',620,6.8,'RETOUR','Sud Suède sans détour urbain.','Promenade mer/forêt à l’arrivée.'],
+        ['10/09','Malmö','Osnabrück',700,7.8,'RETOUR','Øresund + Grand Belt + Allemagne.','Garder de la marge trafic.'],
+        ['11/09','Osnabrück','Chevreuse',680,7.0,'MAISON','Dernière vraie journée route.','Arrivée maison, nettoyage léger.'],
+        ['12/09','Chevreuse','Restitution van avant 16:00',25,0.7,'RESTITUTION','Plein, AdBlue si nécessaire, eau/vidanges, photos.','Large marge avant 16:00.']
+      ]
+    },
+    B:{
+      label:'B · Road Trip Confort',subtitle:'Étapes régulières, presque toujours 6–7 h 30, sept nuits Lofoten protégées.',lofotenNights:7,
+      rows:[
+        ['25/08','Chevreuse','Osnabrück',680,7.0,'TRANSIT','Première journée soutenue mais raisonnable.','Arrivée assez tôt pour une vraie marche avec Paddy.'],
+        ['26/08','Osnabrück','Malmö',700,7.8,'TRANSIT','Danemark par les ponts puis Malmö.','Pas de détour urbain si fatigue.'],
+        ['27/08','Malmö','Södertälje / Trosa',620,6.8,'TRANSIT','Remonter la Suède sans entrer dans Stockholm.','Nuit nature calme au sud de Stockholm.'],
+        ['28/08','Södertälje / Trosa','Umeå',665,7.5,'TRANSIT','Longue mais régulière E4.','Pauses structurées.'],
+        ['29/08','Umeå','Kiruna / Abisko',600,7.0,'TRANSIT','Laponie et grands espaces.','Soirée récupération.'],
+        ['30/08','Kiruna / Abisko','Lofoten Est · Lyngvær / Gimsøy',410,5.8,'ARRIVÉE','Narvik puis E10; arrivée aux Lofoten sans stress.','Aucune grosse randonnée ce jour.'],
+        ['31/08','Lofoten Est','Lofoten Est',35,1.0,'RANDO','Hoven prioritaire ou Festvågtind si sec + vent faible.','Départ tôt pour Festvågtind.'],
+        ['01/09','Lofoten Est','Lofoten Centre · Haukland/Uttakleiv',85,1.7,'RANDO','Mannen si météo stable; sinon balade Haukland–Uttakleiv.','Paddy en laisse sur crêtes/exposition.'],
+        ['02/09','Lofoten Centre','Ramberg / Fredvang',55,1.2,'RANDO','Holandsmælen OU Ryten/Kvalvika selon meilleure fenêtre météo.','Ne pas cumuler; protéger les jambes.'],
+        ['03/09','Ramberg / Fredvang','Reine / Moskenes',50,1.2,'OUEST','Nusfjord + Reine; Reinebringen uniquement très tôt et terrain sec.','Parking/fréquentation à anticiper.'],
+        ['04/09','Reine / Moskenes','Ramberg / Flakstad',50,1.2,'MÉTÉO','Joker randonnée prioritaire manquée.','Choix météo entre Reinebringen, Ryten et Holandsmælen.'],
+        ['05/09','Ramberg / Flakstad','Lofoten Est · Lyngvær',95,2.0,'SORTIE','Retour progressif vers l’est; Vikten au coucher du soleil si timing.','Dernière nuit Lofoten bien placée.'],
+        ['06/09','Lofoten Est','Kiruna',410,5.8,'RETOUR','E10 via Narvik et Abisko.','Journée douce.'],
+        ['07/09','Kiruna','Umeå',600,7.0,'RETOUR','Axe rapide suédois.','Pauses toutes les 2 h.'],
+        ['08/09','Umeå','Södertälje / Trosa',665,7.5,'RETOUR','E4 plein sud.','Contourner Stockholm.'],
+        ['09/09','Södertälje / Trosa','Malmö',620,6.8,'RETOUR','Sud Suède.','Nuit mer/forêt.'],
+        ['10/09','Malmö','Osnabrück',700,7.8,'RETOUR','Ponts puis Allemagne.','Garder 30–45 min de marge trafic.'],
+        ['11/09','Osnabrück','Chevreuse',680,7.0,'MAISON','Retour maison.','Nettoyage léger à l’arrivée.'],
+        ['12/09','Chevreuse','Restitution van avant 16:00',25,0.7,'RESTITUTION','Plein, AdBlue si nécessaire, eau/vidanges, photos.','Large marge avant 16:00.']
+      ]
+    }
   };
 
-  const STOPS=[
-    {date:'25/08',name:'Chevreuse',lat:48.706,lon:2.038},
-    {date:'25/08',name:'Nuit 1',lat:53.70,lon:9.90},
-    {date:'26/08',name:'Nuit 2',lat:57.90,lon:14.30},
-    {date:'27/08',name:'Forsgården',lat:60.675,lon:17.074},
-    {date:'28/08',name:'Nuit 4',lat:64.50,lon:20.50},
-    {date:'29/08',name:'Abisko Mountain Lodge',lat:68.354,lon:18.832},
-    {date:'30-31/08',name:'Hov Camping',lat:68.341,lon:14.117},
-    {date:'01/09',name:'Uttakleiv',lat:68.209,lon:13.507},
-    {date:'02 & 04/09',name:'Lofoten Beach Camp',lat:68.089,lon:13.236},
-    {date:'03/09',name:'Moskenes',lat:67.901,lon:13.046},
-    {date:'05/09',name:'Björkliden Camping',lat:68.407,lon:18.687},
-    {date:'06/09',name:'Rana Camping',lat:66.324,lon:14.125},
-    {date:'07/09',name:'Halland Camping',lat:62.820,lon:9.870},
-    {date:'08/09',name:'Topcamp Ekeberg',lat:59.900,lon:10.784},
-    {date:'09/09',name:'Wohnmobilhafen Hamburg Süd',lat:53.483,lon:10.018},
-    {date:'10/09',name:'Maison · Chevreuse',lat:48.706,lon:2.038},
-    {date:'11/09',name:'Roadsurfer · Champlan',lat:48.708,lon:2.279}
+  const NIGHT_ZONES={
+    'Hambourg / vallée de l’Elbe':[
+      {kind:'camping',name:'Stover Strand Camping',url:'https://www.camping-stover-strand.de/en/',note:'Confort complet au bord de l’Elbe; bon reset après la première grosse étape.'},
+      {kind:'nature',name:'Stover Strand · première ligne Elbe',url:'https://www.camping-stover-strand.de/en/43/pitches-and-accommodations/',note:'Vue fleuve, sensation nature, emplacement autorisé.'},
+      {kind:'free',name:'Digue de l’Elbe · secteur rural Winsen/Hoopte',url:G('Hoopte Elbe Winsen Luhe'),note:'Gratuit potentiel, très calme et plat. Vérifier impérativement les panneaux de stationnement de nuit le jour même.'}
+    ],
+    'Osnabrück':[
+      {kind:'camping',name:'Campingpark Kronensee',url:G('Campingpark Kronensee Osnabrück'),note:'Lac + forêt, vrai camping reposant.'},
+      {kind:'nature',name:'Camping Niedersachsenhof',url:G('Camping Niedersachsenhof Osnabrück'),note:'Rural, simple, calme, accès facile.'},
+      {kind:'free',name:'Dümmer See · parking nature périphérique',url:G('Dümmer See Wohnmobil Parkplatz'),note:'Chercher le secteur légal le plus calme côté nature; 0 € seulement si signalisation locale l’autorise.'}
+    ],
+    'Norrköping / Bråviken':[
+      {kind:'camping',name:'First Camp Kolmården',url:'https://en.firstcamp.se/destinations/kolmarden-norrkoping',note:'Vue Bråviken, sanitaires et services.'},
+      {kind:'nature',name:'Himmelstalund Ställplats',url:G('Himmelstalund ställplats Norrköping'),note:'Aire officielle, facile en arrivée tardive.'},
+      {kind:'free',name:'Rastplats Herrbeta / E4',url:G('Rastplats Herrbeta E4 Sweden'),note:'Option gratuite officielle de transit; choisir la partie la plus éloignée de la chaussée et vérifier la limite 24 h.'}
+    ],
+    'Malmö':[
+      {kind:'camping',name:'First Camp Sibbarp Malmö',url:'https://en.firstcamp.se/destinations/sibbarp-malmoe',note:'Mer, Øresund, très pratique.'},
+      {kind:'nature',name:'Sibbarp · emplacement mer',url:G('Sibbarp Malmö motorhome'),note:'Rester sur une zone explicitement autorisée, côté littoral.'},
+      {kind:'free',name:'Lernacken / côte Øresund · parking autorisé',url:G('Lernacken Malmö parking'),note:'Très belle lumière sur le pont; uniquement si la signalisation du jour autorise le stationnement nocturne.'}
+    ],
+    'Södertälje / Trosa':[
+      {kind:'camping',name:'Farstanäs Camping',url:'https://www.sodertalje.se/kultur-och-fritid/natur-och-friluftsliv/farstanas-camping/',note:'Réserve naturelle + plage; excellent à l’aller avant fermeture saisonnière.'},
+      {kind:'nature',name:'Trosa Havsbad Camping',url:'https://camping.se/en/camping/2623/Trosa-Havsbad-Camping',note:'Baltique, plage, sauna, très bon retour septembre.'},
+      {kind:'free',name:'Rastplats Tystberga / E4',url:G('Rastplats Tystberga E4 Sweden'),note:'Gratuit, boisé, pratique et sans détour; vérifier limite et panneaux.'}
+    ],
+    'Umeå':[
+      {kind:'camping',name:'First Camp Nydala Umeå',url:'https://en.firstcamp.se/destinations/nydala-umea',note:'Lac, services complets.'},
+      {kind:'nature',name:'Kvarkenfisk Ställplats',url:G('Kvarkenfisk Umeå ställplats'),note:'Mer + horizon du golfe de Botnie, gros coup de cœur nature.'},
+      {kind:'free',name:'Rastplats Täfteböle / E4',url:G('Rastplats Täfteböle E4'),note:'Forêt et calme, gratuit; vérifier la signalisation et choisir la zone la plus éloignée des poids lourds.'}
+    ],
+    'Kiruna / Abisko':[
+      {kind:'camping',name:'Camp Ripan',url:'https://ripan.se/en/rooms/camping/',note:'Meilleur reset confort du transit nord.'},
+      {kind:'nature',name:'Björkliden Camping',url:'https://bjorkliden.com/en/stay-travel/accommodation/camping/',note:'Montagnes, proche Abisko, fantastique au réveil.'},
+      {kind:'free',name:'E10 · Tornehamn / Bessejohka',url:G('Tornehamn Bessejohka E10 Sweden'),note:'Option montagne exceptionnelle et gratuite si le panneau local autorise la nuit. Ne pas utiliser le parking STF Abisko pour dormir.'}
+    ],
+    'Lofoten Est · Lyngvær / Gimsøy':[
+      {kind:'camping',name:'Lyngvær Lofoten Bobilcamping',url:'https://lofoten-bobilcamping.no/en-hjemmeside/',note:'Vestfjord + montagnes, services camping-car.'},
+      {kind:'nature',name:'Hov Camping · Gimsøy',url:'https://hovgard.no/en/camping-caravanning/',note:'Océan ouvert, excellent pour Hoven et lumière du soir.'},
+      {kind:'free',name:'Aire E10 / Austnesfjorden · spot autorisé du jour',url:G('Austnesfjorden viewpoint Lofoten'),note:'Chercher uniquement un parking routier clairement autorisé. Zéro hors-piste; vérifier panneau « no camping ».'}
+    ],
+    'Lofoten Centre · Haukland/Uttakleiv':[
+      {kind:'camping',name:'Reineholmen / Ballstad Motorhome Camp',url:'https://book.reineholmen.no/en/',note:'Petite île, mer, services modernes.'},
+      {kind:'nature',name:'Uttakleiv Beach camping area',url:'https://visitlofoten.com/en/topic/uttakleiv-beach/',note:'Nuit signature, organisée et autorisée.'},
+      {kind:'free',name:'Vestvågøy · parking routier côtier autorisé',url:G('Vestvågøy Lofoten scenic parking'),note:'Gratuit seulement si aucune restriction locale; ne jamais dormir sur prairie/plage hors parking.'}
+    ],
+    'Ramberg / Fredvang':[
+      {kind:'camping',name:'Lofoten Beach Camp',url:'https://www.lofotenbeachcamp.no/',note:'Skagsanden, idéal pour douche/recharge après Ryten.'},
+      {kind:'nature',name:'Fredvang / Innersand overnight parking',url:'https://visitlofoten.com/en/parking-for-kvalvika-og-ryten/',note:'Parfait pour départ matinal Ryten/Kvalvika.'},
+      {kind:'free',name:'Flakstadøya · aire routière panoramique autorisée',url:G('Flakstad Lofoten scenic parking'),note:'Choisir le jour même selon panneaux. Priorité calme + vue mer; pas de bivouac hors parking.'}
+    ],
+    'Reine / Moskenes':[
+      {kind:'camping',name:'Moskenes Camping',url:'https://moskenescamping.no/',note:'Base pratique pour Reine, Sørvågen et Å.'},
+      {kind:'nature',name:'Reine / Sørvågen motorhome area',url:G('Sørvågen motorhome parking'),note:'Positionnement utile pour Reinebringen très tôt.'},
+      {kind:'free',name:'Moskenesøy · parking routier autorisé hors villages',url:G('Moskenesøy scenic parking Lofoten'),note:'Option 0 € seulement si signalisation locale compatible; éviter les parkings de départ de randonnée interdits la nuit.'}
+    ],
+    'Ramberg / Flakstad':[
+      {kind:'camping',name:'Lofoten Beach Camp',url:'https://www.lofotenbeachcamp.no/',note:'Services + plage, excellent reset.'},
+      {kind:'nature',name:'Ramberg Resort Camping',url:'https://www.rambergresort.no/campsite',note:'Plage calme, bonne alternative.'},
+      {kind:'free',name:'Vikten coastal road · spot légal à confirmer',url:'https://park4night.com/fr/place/60765',note:'Vue mer exceptionnelle mais seulement 3–4 vans, exposé et irrégulier. Vérifier panneaux et ne jamais bloquer les croisements.'}
+    ]
+  };
+
+  const HIKE_RULES=[
+    ['Festvågtind','Départ tôt; rochers glissants mouillés; éviter pluie et vent fort.'],
+    ['Hoven','Option calme et moins exposée; terrain souvent humide.'],
+    ['Mannen','Crête finale exposée; uniquement vent faible et terrain sec.'],
+    ['Holandsmælen','Priorité calme/panorama; brouillard et terrain humide = renoncer.'],
+    ['Ryten / Kvalvika','~5 h; boue fréquente et sommet exposé au vent; départ matin.'],
+    ['Reinebringen','Très fréquenté; ~1 970 marches; départ très tôt, sec et bonne visibilité uniquement.']
   ];
 
-  const ROAD_GROUPS=[
-    [[2.038,48.706],[9.99,53.55],[9.45,54.79],[10.39,55.40],[12.57,55.68],[14.30,57.90],[17.074,60.675],[20.50,64.50],[22.154,65.584],[20.226,67.856],[18.832,68.354],[17.427,68.438],[14.568,68.235],[14.117,68.341],[13.507,68.209],[13.236,68.089],[13.046,67.901]],
-    [[13.046,67.901],[13.236,68.089],[14.568,68.235],[17.427,68.438],[18.687,68.407]],
-    [[18.687,68.407],[18.832,68.354],[20.226,67.856],[20.652,67.134],[20.65,66.39],[19.17,65.59],[17.11,65.10],[15.09,65.82],[14.125,66.324]],
-    [[14.125,66.324],[13.50,65.84],[13.18,65.32],[12.21,64.47],[10.40,63.43],[9.87,62.82]],
-    [[9.87,62.82],[10.13,61.11],[10.75,59.91],[10.784,59.900]],
-    [[10.784,59.900],[11.974,57.709],[12.910,55.578],[12.568,55.676],[10.39,55.40],[9.50,55.49],[9.45,54.79],[10.018,53.483]],
-    [[10.018,53.483],[8.80,53.08],[7.46,51.51],[6.96,50.94],[5.57,50.63],[4.35,50.85],[2.038,48.706],[2.279,48.708]]
-  ];
+  function clone(v){return JSON.parse(JSON.stringify(v));}
+  function variant(){return (state.routeVariant==='A'||state.routeVariant==='B')?state.routeVariant:DEFAULT_VARIANT;}
+  function data(){return ROUTES[variant()];}
+  function totalKm(){return data().rows.reduce((s,r)=>s+(Number(r[3])||0),0);}
+  function selectVariant(v){state.routeVariant=v;state.routePlanVersion=PLAN_VERSION;save();renderDashboardPlan();}
+  function optionsForDestination(dest){return NIGHT_ZONES[dest]||[];}
+  function optionHtml(o){const icon=o.kind==='camping'?'🏕️':o.kind==='nature'?'🌿':'🌲';const label=o.kind==='camping'?'Camping premium':o.kind==='nature'?'Nature premium':'Nature premium FREE';return `<article style="padding:10px 0;border-top:1px solid rgba(120,120,120,.2)"><b>${icon} ${label}</b><br><a href="${esc(o.url)}" target="_blank" rel="noopener">${esc(o.name)} ↗</a><p class="muted" style="margin:4px 0 0">${esc(o.note)}</p></article>`;}
+  function routeButtons(){const v=variant();return `<div class="toolbar"><button class="btn ${v==='A'?'primary':''}" data-route-variant="A">🚀 A · Fast Track</button><button class="btn ${v==='B'?'primary':''}" data-route-variant="B">🌿 B · Confort</button></div>`;}
+  function bindVariantButtons(){document.querySelectorAll('[data-route-variant]').forEach(b=>b.onclick=()=>selectVariant(b.dataset.routeVariant));}
+  function applyConsistency(){let changed=false;if(!state.routeVariant){state.routeVariant=DEFAULT_VARIANT;changed=true;}if(state.routePlanVersion!==PLAN_VERSION){state.routePlanVersion=PLAN_VERSION;state.activeRoutePlan='A/B road-only · hikes protected';state.routePolicy={noFerry:'Aucun ferry',travelWindow:'Départ Chevreuse 25/08 · retour maison 11/09 · restitution 12/09 avant 16:00',variantA:'Fast Track: longues journées à l’aller, 8 nuits Lofoten',variantB:'Confort: journées régulières, 7 nuits Lofoten',hikes:'Protéger Hoven/Festvågtind, Mannen, Holandsmælen, Ryten/Kvalvika et Reinebringen selon météo',freeNights:'Une option Nature Premium FREE par étape; vérifier toujours la signalisation locale'};changed=true;}if(changed)save();}
 
-  function cloneData(value){return JSON.parse(JSON.stringify(value));}
-  function totalKm(){return ITINERARY.reduce((sum,row)=>sum+(Number(row[3])||0),0);}
-  function optionHtml(option,preferred=false){
-    if(!option)return '';
-    return `<div style="margin:8px 0"><a class="btn ${preferred?'primary':''}" href="${esc(option.url)}" target="_blank" rel="noopener">${preferred?'⭐ ':''}${esc(option.name)} ↗</a><p class="muted" style="margin:6px 0 0">${esc(option.role||'')}</p>${preferred?`<p style="margin:4px 0 0"><b>Calme ${esc(option.calm||'—')}</b> · ${esc(option.paddy||'')}</p>`:''}</div>`;
-  }
-  function currentStage(){
-    const parts=String(state.current?.date||'').split('-');
-    const date=parts.length===3?`${parts[2]}/${parts[1]}`:'';
-    return ITINERARY.find(row=>row[0]===date)||null;
-  }
+  function renderDashboardPlan(){const d=data();byId('app').innerHTML=`<section class="card" style="border-left:5px solid #0f766e;margin-bottom:12px"><p class="eyebrow">PLAN V83 · ZÉRO FERRY · 25 AOÛT → 12 SEPTEMBRE</p><h2>${esc(d.label)}</h2><p>${esc(d.subtitle)}</p>${routeButtons()}</section><div class="grid">${card('Nuits Lofoten',String(d.lofotenNights),variant()==='A'?'29 août → 5 septembre':'30 août → 5 septembre')}${card('Restitution','12/09 avant 16:00','Chevreuse la veille')}${card('Distance planifiée',totalKm().toLocaleString('fr-FR')+' km','hors excursions locales')}${card('Ferry','0','Ponts uniquement')}</div><section class="card" style="margin-top:12px"><p class="eyebrow">RANDONNÉES À PROTÉGER</p><h2>La météo décide, pas le calendrier</h2>${HIKE_RULES.map(x=>`<p><b>${esc(x[0])}</b> — ${esc(x[1])}</p>`).join('')}<div class="popup-warning"><b>Règle :</b> une seule grosse randonnée par jour. La journée du 4 septembre reste volontairement libre pour rattraper la meilleure fenêtre météo.</div></section>`;bindVariantButtons();}
 
-  function applyConsistency(){
-    let changed=false;
-    state.vehicleProfile=state.vehicleProfile||{};
-    if(state.vehicleProfile.ferryGps!==GPS_RULE){state.vehicleProfile.ferryGps=GPS_RULE;changed=true;}
-    if(state.current&&/ferry|traversée/i.test(String(state.current.decision||''))){state.current.decision='Conserver 6 nuits dans les Lofoten puis rentrer par Björkliden, Mo i Rana, Trondheim et Oslo, sans aucun ferry';changed=true;}
-    return changed;
-  }
+  function renderItineraryPlan(){const d=data();byId('app').innerHTML=`<section class="card" style="margin-bottom:12px"><p class="eyebrow">ITINÉRAIRES A/B</p><h1>${esc(d.label)}</h1><p>${esc(d.subtitle)}</p>${routeButtons()}<div class="popup-warning"><b>Important :</b> les heures sont de la conduite pure. A accepte volontairement trois très longues journées à l’aller; B vise un rythme nettement plus régulier.</div></section>${d.rows.map((r,i)=>{const [date,from,to,km,hours,type,goal,paddy]=r;const opts=optionsForDestination(to);return `<article class="card" style="margin-bottom:12px"><div class="nightly-options-heading"><div><p class="eyebrow">ÉTAPE ${i+1} · ${esc(date)} · ${esc(type)}</p><h2>${esc(from)} → ${esc(to)}</h2></div><div style="text-align:right"><b>≈ ${esc(km)} km</b><br><span>≈ ${esc(hours)} h</span></div></div><p>${esc(goal)}</p><p class="muted"><b>Paddy / rythme :</b> ${esc(paddy)}</p>${opts.length?`<details open><summary><b>3 options pour la nuit</b></summary>${opts.map(optionHtml).join('')}</details>`:''}</article>`;}).join('')}`;bindVariantButtons();}
 
-  function migrate(){
-    let changed=applyConsistency();
-    if(state.routePlanVersion!==PLAN_VERSION){
-      state.itinerary=cloneData(ITINERARY);
-      state.nightlyOptions=cloneData(NIGHTS);
-      state.activeRoutePlan='audited-norway-heavy-road-only';
-      state.routePlanVersion=PLAN_VERSION;
-      state.routePolicy={noFerry:'Aucun ferry pendant tout le voyage',lofoten:'Six nuits dans les Lofoten du 30 août au 5 septembre',norwayReturn:'Björkliden et la Suède intérieure servent uniquement à contourner Tysfjord; retour ensuite par Mo i Rana, Trondheim et Oslo',home:'Chevreuse le 10 septembre, arrivée très tardive acceptée',paddy:'Paddy reste toujours avec Olivier et Sorya; pauses toutes les deux heures sur les longues étapes',gps:GPS_RULE};
-      if(state.current)state.current.decision='Conserver 6 nuits dans les Lofoten puis rentrer par Björkliden, Mo i Rana, Trondheim et Oslo, sans aucun ferry';
-      changed=true;
-    }
-    if(changed)save();
-  }
+  async function loadLeaflet(){if(window.L)return;if(window.__leafletPromise)return window.__leafletPromise;window.__leafletPromise=new Promise((resolve,reject)=>{if(!document.querySelector('link[data-leaflet]')){const css=document.createElement('link');css.rel='stylesheet';css.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';css.dataset.leaflet='1';document.head.appendChild(css);}const s=document.createElement('script');s.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';s.onload=resolve;s.onerror=reject;document.head.appendChild(s);});return window.__leafletPromise;}
+  const COORDS={Chevreuse:[48.706,2.038],'Hambourg / vallée de l’Elbe':[53.55,10.0],Osnabrück:[52.28,8.05],'Norrköping / Bråviken':[58.59,16.19],Malmö:[55.61,13.00],'Södertälje / Trosa':[58.90,17.55],Umeå:[63.83,20.26],'Kiruna / Abisko':[68.20,19.20],'Lofoten Est · Lyngvær / Gimsøy':[68.30,14.10],'Lofoten Est':[68.30,14.10],'Lofoten Centre · Haukland/Uttakleiv':[68.20,13.52],'Lofoten Centre':[68.18,13.52],'Ramberg / Fredvang':[68.09,13.23],'Reine / Moskenes':[67.92,13.08],'Ramberg / Flakstad':[68.09,13.24],Kiruna:[67.86,20.23],'Södertälje / Trosa':[58.90,17.55],Chevreuse:[48.706,2.038]};
+  async function draw(){const status=byId('route-status');try{await loadLeaflet();if(window.__roadMap){try{window.__roadMap.remove();}catch{}}const map=window.__roadMap=L.map('map-canvas').setView([59,13],4);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap'}).addTo(map);const pts=[];data().rows.forEach(r=>{const p=COORDS[r[2]]||COORDS[r[1]];if(p){pts.push(p);L.marker(p).addTo(map).bindPopup(`<b>${esc(r[0])}</b><br>${esc(r[2])}`);}});if(pts.length){L.polyline(pts,{weight:4,opacity:.9}).addTo(map);map.fitBounds(pts,{padding:[24,24]});}status.innerHTML=`<b>${esc(data().label)}</b> · tracé indicatif des étapes. Ouvrir le GPS pour le détail routier et conserver « éviter les ferries ».`;}catch(e){console.error(e);status.textContent='Carte momentanément indisponible.';}}
+  function renderMapPlan(){byId('app').innerHTML=`<section class="card"><p class="eyebrow">CARTE · VARIANTES A/B</p><h2>${esc(data().label)}</h2>${routeButtons()}<p>${esc(GPS_RULE)}</p><div id="route-status" class="status">Chargement…</div><div id="map-canvas" class="map" style="margin-top:12px"></div></section>`;bindVariantButtons();setTimeout(draw,0);}
 
-  function renderDashboardPlan(){
-    const stage=currentStage();
-    byId('app').innerHTML=`<section class="card" style="border-left:5px solid #0f766e;margin-bottom:12px"><p class="eyebrow">PLAN OFFICIEL · 6 NUITS LOFOTEN · ZÉRO FERRY</p><h2>Retour norvégien avec contournement intérieur suédois</h2><p>Le 5 septembre, la nuit se fait au camping de Björkliden — pas une seconde fois à Abisko Mountain Lodge. Le 6, la route traverse la Suède intérieure jusqu’à Mo i Rana, puis revient en Norvège par Trondheim et Oslo.</p></section><div class="grid">${card('Nuits Lofoten','6','30 août → 5 septembre')}${card('Retour Norvège','Mo i Rana → Trondheim → Oslo','7–9 septembre')}${card('Arrivée maison','10/09 très tard','Chevreuse')}${card('Distance planifiée',totalKm().toLocaleString('fr-FR')+' km','hors excursions')}</div>${stage?`<section class="card" style="margin-top:12px"><p class="eyebrow">ÉTAPE DU JOUR</p><h2>${esc(stage[1])} → ${esc(stage[2])}</h2><p><b>≈ ${esc(stage[3])} km · ${esc(stage[4])} h de conduite pure</b></p><p>${esc(stage[6])}</p><p class="muted">${esc(stage[7])}</p></section>`:''}<section class="card" style="margin-top:12px"><div class="popup-warning"><b>Point clé :</b> rester entièrement en Norvège depuis Narvik imposerait un ferry à Tysfjord. Le détour routier Björkliden–Storuman–Mo i Rana évite cette traversée.</div></section>`;
-  }
-
-  function renderItineraryPlan(){
-    byId('app').innerHTML=`<section class="card" style="margin-bottom:12px"><div class="nightly-options-heading"><div><p class="eyebrow">ITINÉRAIRE AUDITÉ · ZÉRO FERRY</p><h1>Six nuits dans les Lofoten, retour par la Norvège</h1></div><div style="text-align:right"><b>${totalKm().toLocaleString('fr-FR')} km</b><br><span>zéro ferry</span></div></div><div class="popup-warning"><b>Rythme assumé :</b> le 6, le 9 et le 10 septembre sont de très longues journées. Les durées affichées sont de la conduite pure et n’incluent ni pauses, ni carburant, ni trafic.</div></section>${ITINERARY.map((row,index)=>{const [date,from,to,km,hours,type,goal,paddy]=row;const night=NIGHTS[date];const critical=['06/09','09/09','10/09'].includes(date);return `<article class="card" style="margin-bottom:12px;${critical?'border:3px solid #b45309;':''}"><div class="nightly-options-heading"><div><p class="eyebrow">ÉTAPE ${index+1} · ${esc(date)}</p><h2>${esc(from)} → ${esc(to)}</h2></div><div style="text-align:right"><b>≈ ${esc(km)} km</b><br><span>${esc(hours)} h · ${esc(type)}</span></div></div><p>${esc(goal)}</p><p class="muted"><b>Paddy :</b> ${esc(paddy)}</p>${date==='06/09'?'<div class="popup-warning"><b>Contournement sans ferry :</b> Björkliden → Abisko → Kiruna → Gällivare → Storuman → Hemavan → Mo i Rana. Ne pas laisser le GPS repartir vers Narvik et Bognes.</div>':''}${night?`<p class="muted" style="margin:10px 0 4px">NUIT PRÉFÉRÉE</p>${optionHtml(night.preferred,true)}${night.alternatives?.length?`<details><summary><b>Voir les alternatives</b></summary>${night.alternatives.map(x=>optionHtml(x,false)).join('')}</details>`:''}`:''}${date==='10/09'?'<div class="popup-warning"><b>Arrivée tardive acceptée :</b> viser une arrivée entre 22 h et minuit, mais s’arrêter immédiatement si la fatigue devient dangereuse.</div>':''}</article>`;}).join('')}`;
-  }
-
-  function loadLeaflet(){
-    if(window.L)return Promise.resolve();
-    if(window.__leafletPromise)return window.__leafletPromise;
-    window.__leafletPromise=new Promise((resolve,reject)=>{
-      if(!document.querySelector('link[data-leaflet]')){const css=document.createElement('link');css.rel='stylesheet';css.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';css.dataset.leaflet='1';document.head.appendChild(css);}
-      const script=document.createElement('script');script.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';script.onload=resolve;script.onerror=()=>reject(new Error('Leaflet indisponible'));document.head.appendChild(script);
-    });
-    return window.__leafletPromise;
-  }
-  async function route(coords){
-    const chain=coords.map(([lon,lat])=>`${lon},${lat}`).join(';');
-    const response=await fetch(`https://router.project-osrm.org/route/v1/driving/${chain}?overview=full&geometries=geojson&steps=false&continue_straight=true`,{cache:'no-store'});
-    if(!response.ok)throw new Error(`OSRM ${response.status}`);
-    const data=await response.json();
-    if(data.code!=='Ok'||!data.routes?.[0])throw new Error('Itinéraire routier indisponible');
-    return data.routes[0].geometry.coordinates.map(([lon,lat])=>[lat,lon]);
-  }
-  async function draw(){
-    const status=byId('route-status');
-    try{
-      await loadLeaflet();
-      if(window.__roadMap){try{window.__roadMap.remove();}catch{}}
-      const map=window.__roadMap=L.map('map-canvas',{preferCanvas:true}).setView([58,11],4);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap'}).addTo(map);
-      const routes=[];for(const group of ROAD_GROUPS)routes.push(await route(group));
-      routes.forEach(points=>L.polyline(points,{weight:4,opacity:.9}).addTo(map));
-      STOPS.forEach((stop,index)=>L.marker([stop.lat,stop.lon]).addTo(map).bindPopup(`<b>${index+1}. ${esc(stop.name)}</b><br>${esc(stop.date)}`));
-      map.fitBounds(routes.flat(),{padding:[24,24]});
-      status.innerHTML='<b>Itinéraire zéro ferry chargé.</b> La nuit du 5 septembre est à Björkliden Camping; le tracé rejoint ensuite Mo i Rana par Storuman et l’E12, puis descend par Trondheim et Oslo.';
-    }catch(error){console.error(error);status.innerHTML='<b>Le calcul routier est momentanément indisponible.</b> Aucun trait droit trompeur n’est affiché. <button id="retry-route">Réessayer</button>';const retry=byId('retry-route');if(retry)retry.onclick=draw;}
-  }
-  function renderMapPlan(){
-    byId('app').innerHTML=`<section class="card"><p class="eyebrow">CARTE ROUTIÈRE · ZÉRO FERRY</p><h2>Lofoten → Björkliden → Storuman → Mo i Rana → Trondheim → Oslo</h2><p>La boucle suédoise sert uniquement à contourner Tysfjord. Le retour repasse ensuite en Norvège à Mo i Rana.</p><div id="route-status" class="status">Calcul de l’itinéraire routier…</div><div id="map-canvas" class="map" style="margin-top:12px"></div><div class="popup-warning"><b>GPS camping-car :</b> ${esc(GPS_RULE)}</div></section>`;
-    setTimeout(draw,0);
-  }
-
-  migrate();
-  window.renderDashboard=renderDashboardPlan;
-  window.renderItinerary=renderItineraryPlan;
-  window.renderMap=renderMapPlan;
+  applyConsistency();
+  window.renderDashboard=renderDashboardPlan;window.renderItinerary=renderItineraryPlan;window.renderMap=renderMapPlan;
   try{renderDashboard=renderDashboardPlan;renderItinerary=renderItineraryPlan;renderMap=renderMapPlan;}catch{}
 })();
