@@ -13,6 +13,10 @@
   const googlePoint=p=>`https://www.google.com/maps/search/?api=1&query=${fixed(p.lat)},${fixed(p.lon)}`;
 
   function addItineraryLinks(){
+    // Important: these generic date-based links belong ONLY to the itinerary tab.
+    // Other specialist cards (hikes, kayak, etc.) can contain dates too and must not
+    // receive a second set of navigation/map actions.
+    if(typeof active!=='undefined' && active!=='itinerary') return;
     document.querySelectorAll('#app article.card').forEach(article=>{
       const eyebrow=article.querySelector('.eyebrow')?.textContent||'';
       const match=eyebrow.match(/(\d{2}\/\d{2})/);
@@ -24,6 +28,7 @@
   }
 
   function addTableCoordinateLinks(){
+    if(typeof active!=='undefined' && active!=='itinerary' && active!=='family') return;
     document.querySelectorAll('#app table tbody tr').forEach(row=>{
       if(row.querySelector('[data-coordinate-link]'))return;
       const editable=[...row.querySelectorAll('td[contenteditable="true"]')];
