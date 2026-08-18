@@ -40,8 +40,8 @@
       category:'Courses · divers',
       label:'Autres courses pour le road trip',
       quantity:'Estimation globale',
-      amount:250,
-      note:'Budget complémentaire prévu pour les autres consommables du voyage'
+      amount:300,
+      note:'Budget complémentaire prévu pour les autres consommables du voyage · +50 € ajouté le 18/08/2026'
     }
   ];
 
