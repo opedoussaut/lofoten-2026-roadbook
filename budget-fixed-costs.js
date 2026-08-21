@@ -40,7 +40,7 @@
   const PRETRIP_GROCERIES=[
     {category:'Courses · petit-déjeuner / snack',label:'Biscuits Bjorg céréales raisin',quantity:'5 paquets sur 10',amount:17.90,note:'Commande Amazon du 08/08/2026 · 3,58 € / paquet'},
     {category:'Courses · boissons',label:'Nescafé Espresso Intenso soluble',quantity:'2 boîtes sur 5',amount:11.84,note:'Commande Amazon du 04/08/2026 · 5,92 € / boîte'},
-    {category:'Courses · divers',label:'Autres courses pour le road trip',quantity:'Estimation globale',amount:300,note:'Budget complémentaire prévu pour les autres consommables du voyage · +50 € ajouté le 18/08/2026'}
+    {category:'Courses · divers',label:'Autres courses pour le road trip',quantity:'Estimation globale',amount:377,note:'Budget complémentaire prévu pour les autres consommables du voyage · +50 € ajouté le 18/08/2026 · +77 € de courses ajouté le 21/08/2026'}
   ];
 
   function euro(value){return Number(value||0).toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';}
