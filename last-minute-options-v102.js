@@ -45,7 +45,8 @@
         booking: 'Réservation / disponibilité directement sur le site officiel du Hof Bockelmann.',
         maps: 'https://www.google.com/maps/search/?api=1&query=Hof+Bockelmann%2C+Oberhaverbeck+1%2C+29646+Bispingen%2C+Germany',
         source: 'https://www.hof-bockelmann.de/wohnmobil-stellplaetze/',
-        reserve: 'https://www.hof-bockelmann.de/buchen/'
+        reserve: 'https://www.hof-bockelmann.de/buchen/',
+        park4night: 'https://park4night.com/fr/place/205207'
       },
       strategy: 'Ma stratégie : garder Plan A comme choix n°1 pour le côté spontané et sauvage. Si vous voulez supprimer tout stress après une journée de 850 km environ, réserver Hof Bockelmann ; vous restez pratiquement dans le même décor et pouvez quand même profiter de la Heide.'
     }
@@ -82,6 +83,7 @@
       <div>
         ${link(place.maps,'Ouvrir dans Maps',true)}
         ${place.reserve ? link(place.reserve,'Réserver / vérifier') : ''}
+        ${place.park4night ? link(place.park4night,'Park4Night') : ''}
         ${link(place.source,'Fiche source')}
       </div>
     </section>`;
