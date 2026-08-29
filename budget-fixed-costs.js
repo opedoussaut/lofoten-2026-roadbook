@@ -1,64 +1,30 @@
 'use strict';
 
+// V119 — budget réel uniquement. Les dépenses sont saisies principalement par conversation
+// et synchronisées dans state.expenses / expenses/expenses.json.
 (function enhanceBudget(){
-  const FIXED_TRIP_COSTS=[
-    {
-      category:'Location camping-car',
-      label:'Roadsurfer · Cozy Cottage',
-      amount:2195,
-      status:'Payé intégralement',
-      note:'18 nuits · 24 août 2026 16:00 → 11 septembre 2026 17:00',
-      detail:[
-        ['Location Cozy Cottage',1802],
-        ['Porte-vélos (2 vélos)',126],
-        ['Frais de réservation',99],
-        ['Frais de voyage',119],
-        ['Retour à 17 h',49]
-      ],
-      payments:[['Paiement initial',1914,'27/02/2026'],['Solde après modification',281,'10/07/2026']]
-    }
-  ];
-
-  const EXPENSE_CATEGORIES=[
-    'Carburant','Camping / nuit','Courses / alimentation','Restaurant / café','Ferry','Péage / pont / tunnel','Parking','Services camping-car','Activité / visite','Kayak','Transport','Paddy','Autre…'
-  ];
-
-  // On ne comptabilise ici que les courses réellement destinées à être consommées
-  // pendant le road trip. Équipement, vêtements, jeux et achats durables sont exclus.
-  const PRETRIP_GROCERIES=[
-    {category:'Courses · petit-déjeuner / snack',label:'Biscuits Bjorg céréales raisin',quantity:'5 paquets sur 10',amount:17.90,note:'Commande Amazon du 08/08/2026 · 3,58 € / paquet'},
-    {category:'Courses · boissons',label:'Nescafé Espresso Intenso soluble',quantity:'2 boîtes sur 5',amount:11.84,note:'Commande Amazon du 04/08/2026 · 5,92 € / boîte'},
-    {category:'Courses · divers',label:'Autres courses pour le road trip',quantity:'Estimation globale',amount:377,note:'Budget complémentaire prévu pour les autres consommables du voyage · +50 € ajouté le 18/08/2026 · +77 € de courses ajouté le 21/08/2026'},
-    {category:'Courses · alimentation',label:'Grand Frais Rambouillet',quantity:'59 articles',amount:199.58,note:'Achat du 22/08/2026 à 14:21 · viande/charcuterie, fruits, produits laitiers, pâtes/riz, tofu, sauces, muesli et snacks · ticket conservé en photo'}
-  ];
-
-  function euro(value){return Number(value||0).toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';}
+  const EXPENSE_CATEGORIES=['Carburant','Camping / nuit','Courses / alimentation','Restaurant / café','Péage / pont / tunnel','Parking','Services camping-car','Activité / visite','Kayak','Transport','Paddy','Autre'];
+  function euro(v){return Number(v||0).toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';}
+  function dateFr(v){if(!v)return '—';const p=String(v).split('-');return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:v;}
+  function normalizedCategory(v){const s=String(v||'Autre');return EXPENSE_CATEGORIES.includes(s)?s:'Autre';}
 
   window.renderBudget=function renderBudget(){
-    const variableTotal=(state.expenses||[]).reduce((sum,row)=>sum+(Number(row[1])||0),0);
-    const fixedTotal=FIXED_TRIP_COSTS.reduce((sum,item)=>sum+item.amount,0);
-    const groceriesTotal=PRETRIP_GROCERIES.reduce((sum,item)=>sum+item.amount,0);
-    const grandTotal=fixedTotal+groceriesTotal+variableTotal;
-
-    const fixedHtml=FIXED_TRIP_COSTS.map(item=>`<section class="card" style="margin-top:12px;border-left:5px solid #15803d"><div class="nightly-options-heading"><div><p class="eyebrow">COÛT FIXE · ${esc(item.category).toUpperCase()}</p><h2>${esc(item.label)}</h2><p>${esc(item.note)}</p></div><div style="text-align:right"><div class="expense-total">${euro(item.amount)}</div><b style="color:#15803d">✓ ${esc(item.status)}</b></div></div><div class="grid" style="margin-top:10px"><div><h3>Détail du tarif</h3>${item.detail.map(row=>`<p style="display:flex;justify-content:space-between;gap:16px"><span>${esc(row[0])}</span><b>${euro(row[1])}</b></p>`).join('')}<hr><p style="display:flex;justify-content:space-between;gap:16px"><b>Total Roadsurfer</b><b>${euro(item.amount)}</b></p></div><div><h3>Paiements</h3>${item.payments.map(row=>`<p style="display:flex;justify-content:space-between;gap:16px"><span>${esc(row[0])}<br><small class="muted">${esc(row[2])}</small></span><b>${euro(row[1])}</b></p>`).join('')}<hr><p><b style="color:#15803d">Solde restant : 0,00 €</b></p><p class="muted">La caution Roadsurfer de 800 € n’est pas comptée comme dépense : elle est seulement bloquée temporairement lors de la prise en charge.</p></div></div></section>`).join('');
-    const groceryRows=PRETRIP_GROCERIES.map(item=>`<tr><td>${esc(item.category)}</td><td><b>${esc(item.label)}</b><br><span class="muted">${esc(item.quantity)}</span></td><td>${euro(item.amount)}</td><td>${esc(item.note)}</td></tr>`).join('');
-    const categoryOptions=EXPENSE_CATEGORIES.map(cat=>`<option value="${esc(cat)}">${esc(cat)}</option>`).join('');
+    const expenses=(state.expenses||[]).slice().sort((a,b)=>String(b?.[4]||'').localeCompare(String(a?.[4]||''));
+    const total=expenses.reduce((s,r)=>s+(Number(r?.[1])||0),0);
+    const byCategory={};
+    expenses.forEach(r=>{const c=normalizedCategory(r?.[0]);byCategory[c]=(byCategory[c]||0)+(Number(r?.[1])||0);});
+    const categories=Object.entries(byCategory).sort((a,b)=>b[1]-a[1]);
+    const firstDate=expenses.length?expenses.reduce((m,r)=>!m||String(r[4])<m?String(r[4]):m,''):'';
+    const lastDate=expenses.length?expenses.reduce((m,r)=>!m||String(r[4])>m?String(r[4]):m,''):'';
+    const days=firstDate&&lastDate?Math.max(1,Math.round((new Date(lastDate)-new Date(firstDate))/86400000)+1):0;
+    const avg=days?total/days:0;
+    const categoryCards=categories.map(([c,a])=>`<div class="card kpi"><span class="muted">${esc(c)}</span><br><strong>${euro(a)}</strong><br><span>${total?Math.round(a/total*100):0}% du total</span></div>`).join('');
+    const rows=expenses.map(r=>`<tr><td><b>${dateFr(r?.[4])}</b></td><td>${esc(r?.[0]||'')}</td><td><b>${euro(r?.[1])}</b></td><td>${esc(r?.[2]||'—')}</td><td>${esc(r?.[3]||'')}</td></tr>`).join('');
 
     byId('app').innerHTML=`
-      <div class="grid"><div class="card kpi"><span class="muted">Coûts fixes déjà payés</span><br><strong>${euro(fixedTotal)}</strong><br><span>Roadsurfer inclus</span></div><div class="card kpi"><span class="muted">Courses Lofoten prévues</span><br><strong>${euro(groceriesTotal)}</strong><br><span>Courses déjà achetées + estimation des courses diverses</span></div><div class="card kpi"><span class="muted">Dépenses voyage enregistrées</span><br><strong>${euro(variableTotal)}</strong><br><span>Carburant, campings, courses, péages…</span></div><div class="card kpi"><span class="muted">Budget dépensé / engagé</span><br><strong>${euro(grandTotal)}</strong><br><span>Coûts fixes + courses Lofoten + dépenses enregistrées</span></div></div>
-      ${fixedHtml}
-      <section class="card" style="margin-top:12px"><p class="eyebrow">COURSES AVANT DÉPART · LOFOTEN</p><h2>Courses destinées au voyage</h2><div class="table-wrap"><table><thead><tr><th>Catégorie</th><th>Article / quantité voyage</th><th>Montant affecté</th><th>Note</th></tr></thead><tbody>${groceryRows}</tbody></table></div><p class="muted" style="margin-top:10px">Seuls les consommables prévus pour être utilisés pendant le road trip sont comptés ici. Les jeux, vêtements, chaussures, accessoires pour Paddy et autres équipements durables restent hors budget Lofoten.</p></section>
-      <div class="card" style="margin-top:12px"><h3>Ajouter une dépense</h3><div class="form"><label>Catégorie<select id="e-cat">${categoryOptions}</select></label><label id="e-cat-custom-wrap" style="display:none">Autre catégorie<input id="e-cat-custom" placeholder="Saisir la catégorie"></label><label>Montant<input id="e-amount" type="number" step="0.01" placeholder="€"></label><label>Lieu<input id="e-place" placeholder="Lieu"></label><label>Note<input id="e-note" placeholder="Note"></label></div><button id="e-add" class="primary">Ajouter</button></div>
-      <section class="card" style="margin-top:12px"><p class="eyebrow">DÉPENSES VARIABLES</p><h2>Dépenses du voyage</h2>${editableTable(state.expenses||[],['Catégorie','Montant €','Lieu','Note','Date'],'expenses')}</section>`;
-
-    bindEditable('expenses',renderBudget);
-    const catSelect=byId('e-cat');
-    const customWrap=byId('e-cat-custom-wrap');
-    catSelect.onchange=()=>{customWrap.style.display=catSelect.value==='Autre…'?'block':'none';if(catSelect.value==='Autre…')byId('e-cat-custom').focus();};
-    byId('e-add').onclick=()=>{
-      const category=catSelect.value==='Autre…'?(byId('e-cat-custom').value.trim()||'Autre'):catSelect.value;
-      state.expenses.push([category,Number(byId('e-amount').value)||0,byId('e-place').value,byId('e-note').value,new Date().toISOString().slice(0,10)]);
-      save();autoSync();renderBudget();
-    };
+      <section class="card" style="border-left:5px solid #153047"><p class="eyebrow">BUDGET RÉEL · LOFOTEN 2026</p><h2 style="margin-bottom:4px">💳 Ce que le voyage a réellement coûté jusqu’ici</h2><p class="muted">Aucun budget prévisionnel : uniquement les dépenses réellement engagées et enregistrées pendant le séjour.</p><div class="expense-total" style="font-size:2.4rem;margin-top:12px">${euro(total)}</div><p><b>${expenses.length}</b> dépense${expenses.length>1?'s':''} enregistrée${expenses.length>1?'s':''}${days?` · ${days} jour${days>1?'s':''} suivi${days>1?'s':''} · moyenne ${euro(avg)}/jour`:''}</p></section>
+      <section style="margin-top:12px"><div class="grid">${categoryCards||'<div class="card"><p>Aucune dépense enregistrée.</p></div>'}</div></section>
+      <section class="card" style="margin-top:12px"><p class="eyebrow">HISTORIQUE COMPLET</p><h2>Dépenses engagées</h2><p class="muted">Les montants en devise d’origine, tickets, précisions ou conversions sont conservés dans le détail lorsque l’information est disponible.</p><div class="table-wrap"><table><thead><tr><th>Date</th><th>Catégorie</th><th>Montant</th><th>Lieu</th><th>Détail</th></tr></thead><tbody>${rows}</tbody></table></div></section>
+      <section class="card" style="margin-top:12px;background:rgba(21,48,71,.06)"><h3 style="margin-top:0">🎙️ Saisie pendant le voyage</h3><p style="margin-bottom:0">Cette page est pensée comme un tableau de bord de consultation. Les nouvelles dépenses peuvent être dictées dans la conversation puis ajoutées au roadbook et synchronisées avec GitHub, sans ressaisie manuelle dans cette page.</p></section>`;
   };
 })();
