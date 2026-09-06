@@ -8,7 +8,7 @@
     const app=document.getElementById('app');
     if(!app)return;
     try{
-      const res=await fetch(DATA_URL+'?v=125',{cache:'no-store'});
+      const res=await fetch(DATA_URL+'?v=126',{cache:'no-store'});
       if(!res.ok)throw new Error('HTTP '+res.status);
       const payload=await res.json();
       const expenses=Array.isArray(payload.expenses)?payload.expenses:[];
