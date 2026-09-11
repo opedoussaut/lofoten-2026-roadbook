@@ -1,19 +1,21 @@
 'use strict';
 (function(){
   const DATA_URL='journal-current.json?v=126';
-  const DAY14_URL='journal-day14.json?v=127';
-  const DAY15_URL='journal-day15.json?v=128';
-  const DAY16_URL='journal-day16.json?v=129';
-  const DAY17_URL='journal-day17.json?v=129';
+  const DAY13_URL='journal-day13.json?v=130';
+  const DAY14_URL='journal-day14.json?v=130';
+  const DAY15_URL='journal-day15.json?v=130';
+  const DAY16_URL='journal-day16.json?v=130';
+  const DAY17_URL='journal-day17.json?v=130';
+  const DAY18_URL='journal-day18.json?v=130';
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const dateFr=v=>{try{return new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(v+'T12:00:00Z'))}catch{return v||''}};
   async function load(){
-    const [r,d14,d15,d16,d17]=await Promise.all([fetch(DATA_URL,{cache:'no-store'}),fetch(DAY14_URL,{cache:'no-store'}),fetch(DAY15_URL,{cache:'no-store'}),fetch(DAY16_URL,{cache:'no-store'}),fetch(DAY17_URL,{cache:'no-store'})]);
+    const [r,d13,d14,d15,d16,d17,d18]=await Promise.all([fetch(DATA_URL,{cache:'no-store'}),fetch(DAY13_URL,{cache:'no-store'}),fetch(DAY14_URL,{cache:'no-store'}),fetch(DAY15_URL,{cache:'no-store'}),fetch(DAY16_URL,{cache:'no-store'}),fetch(DAY17_URL,{cache:'no-store'}),fetch(DAY18_URL,{cache:'no-store'})]);
     if(!r.ok)throw new Error('HTTP '+r.status);
     const p=await r.json();
     const base=Array.isArray(p.entries)?p.entries:[];
     const extra=[];
-    for(const response of [d14,d15,d16,d17]){if(response.ok){const q=await response.json();if(Array.isArray(q.entries))extra.push(...q.entries);}}
+    for(const response of [d13,d14,d15,d16,d17,d18]){if(response.ok){const q=await response.json();if(Array.isArray(q.entries))extra.push(...q.entries);}}
     return [...extra,...base.filter(e=>!extra.some(x=>Number(x.day)===Number(e.day)))];
   }
   function paragraphs(entry){
