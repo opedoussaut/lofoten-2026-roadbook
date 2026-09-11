@@ -41,7 +41,23 @@
     ["Achats / souvenirs",5.47,"Galleri Lofo…","59 NOK · libellé bancaire partiel ; transaction unique","2026-09-05"],
     ["Transport / autre",6.5,"Misværhola","70 NOK · transaction unique n°1 ; nature exacte à préciser","2026-09-05"],
     ["Achats / souvenirs",36.47,"Zettle · Lillekio…","393 NOK · libellé bancaire partiel ; transaction unique","2026-09-05"],
-    ["Transport / autre",6.5,"Misværhola","70 NOK · transaction unique n°2 ; deux débits distincts visibles","2026-09-05"]
+    ["Transport / autre",6.5,"Misværhola","70 NOK · transaction unique n°2 ; deux débits distincts visibles","2026-09-05"],
+    ["Carburant",96.55,"Skoogs Bränsle","1 069,51 SEK · débit confirmé ; opération à 270,83 € déclinée exclue","2026-09-06"],
+    ["Carburant",64.14,"Preem Docks","710,45 SEK · débit confirmé","2026-09-07"],
+    ["Transport public",7.76,"SL.se","86 SEK · billet transport Stockholm","2026-09-08"],
+    ["Restaurant / café",15.33,"Rosendals","170 SEK · Stockholm","2026-09-08"],
+    ["Restaurant / café",29.22,"PayPal · Carpe…","324 SEK · Stockholm · libellé bancaire partiel","2026-09-08"],
+    ["Transport public",7.76,"SL.se","86 SEK · deuxième billet transport Stockholm","2026-09-08"],
+    ["Camping / nuit",79.92,"Bredäng Camping","890 SEK · débit en cours de traitement","2026-09-09"],
+    ["Courses / alimentation",85.19,"Coop Sweden","948,78 SEK · débit en cours de traitement","2026-09-09"],
+    ["Achats Paddy",112.17,"Arken Zoo","1 249,17 SEK · achat pour Paddy · débit en cours de traitement","2026-09-09"],
+    ["Carburant",117.03,"St1","1 303,37 SEK · plein du trajet retour","2026-09-09"],
+    ["Péage / pont / tunnel",139.15,"Øresundsbron","1 040 DKK · passage retour vers le Danemark · débit en cours de traitement","2026-09-09"],
+    ["Camping / nuit",39.47,"Feddet Strand Resort","295 DKK · dernière étape au Danemark · débit en cours de traitement","2026-09-10"],
+    ["Carburant",56.94,"Go’on","Coût net : débit 100,35 € (750 DKK) moins remboursement 43,41 € (425,61 DKK) · remboursement compté une seule fois","2026-09-10"],
+    ["Péage / pont / tunnel",86.3,"Storebælt","645 DKK · passage retour · débit en cours de traitement","2026-09-10"],
+    ["Carburant",149.84,"Esso","Dernier plein du trajet retour · débit confirmé","2026-09-11"],
+    ["Péage / pont / tunnel",27.5,"Sanef","Dourges → Paris (Roissy) · classe 2 · 168,1 km · reçu du 11/09/2026 à 15:40","2026-09-11"]
   ],
-  "updatedAt": "2026-09-06T09:05:00+02:00"
+  "updatedAt": "2026-09-11T20:45:00+02:00"
 }
