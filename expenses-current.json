@@ -57,7 +57,8 @@
     ["Carburant",56.94,"Go’on","Coût net : débit 100,35 € (750 DKK) moins remboursement 43,41 € (425,61 DKK) · remboursement compté une seule fois","2026-09-10"],
     ["Péage / pont / tunnel",86.3,"Storebælt","645 DKK · passage retour · débit en cours de traitement","2026-09-10"],
     ["Carburant",149.84,"Esso","Dernier plein du trajet retour · débit confirmé","2026-09-11"],
-    ["Péage / pont / tunnel",27.5,"Sanef","Dourges → Paris (Roissy) · classe 2 · 168,1 km · reçu du 11/09/2026 à 15:40","2026-09-11"]
+    ["Péage / pont / tunnel",27.5,"Sanef","Dourges → Paris (Roissy) · classe 2 · 168,1 km · reçu du 11/09/2026 à 15:40","2026-09-11"],
+    ["Carburant",130.84,"Intermarché Magny-les-Hameaux","Plein final avant restitution de Gaston · 56,42 L de gazole à 2,319 €/L · ticket du 12/09/2026 à 07:50","2026-09-12"]
   ],
-  "updatedAt": "2026-09-11T20:45:00+02:00"
+  "updatedAt": "2026-09-12T07:52:00+02:00"
 }
