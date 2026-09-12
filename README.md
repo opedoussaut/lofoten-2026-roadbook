@@ -18,7 +18,7 @@ Live site: https://opedoussaut.github.io/lofoten-2026-roadbook/
 - `journal-en.json`: full English stories. Original French accounts remain in `journal-current.json` and `journal-day13.json`–`journal-day18.json`.
 - `route-plans-en.json`: English presentation of the saved plans in `roadbook-plan.js`. Planned kilometres and hours are retained as estimates. Actual daily driving distances are not invented.
 - `expenses-current.json`: authoritative expense amounts. `expense-labels-en.json` translates each exact source row without changing its financial value.
-- `assets/crew-hero.webp`: approved illustrated crew, optimised for the web. Original personal photographs are not needed by the application.
+- `assets/crew-hero.jpg`: approved illustrated crew in a standard RGB JPEG, preloaded for compatibility across browsers. Original personal photographs are not needed by the application.
 - `sw.js`, `manifest.webmanifest`: versioned offline cache and English application metadata.
 
 GitHub Pages publishes `main` from the repository root. Existing historical modules and French source data are retained for traceability; they are not loaded by the final application.

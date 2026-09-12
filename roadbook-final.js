@@ -1,7 +1,7 @@
 'use strict';
 
 (() => {
-  const VERSION = '2026-final-2';
+  const VERSION = '2026-final-3';
   const TRIP_KM = 8500;
   const PICKUP_ODOMETER_KM = 50613;
   const tripDistance = TRIP_KM.toLocaleString('en-GB');
@@ -38,7 +38,7 @@
 
   function introduction() {
     return `<section class="expedition-hero">
-      <img src="assets/crew-hero.webp?v=${VERSION}" width="1672" height="941" loading="eager" fetchpriority="high" alt="Our illustrated crew in the Lofoten Islands: Olivier the guide, Sorya the sherpa and photographer, Paddington the VIP guest, and Gaston our campervan.">
+      <img src="assets/crew-hero.jpg?v=${VERSION}" width="1672" height="941" loading="eager" fetchpriority="high" alt="Our illustrated crew in the Lofoten Islands: Olivier the guide, Sorya the sherpa and photographer, Paddington the VIP guest, and Gaston our campervan.">
       <div class="hero-copy"><p class="eyebrow">25 Aug – 11 Sep 2026 · Paris → Lofoten → Paris</p><h1>A long way<br>for a little dog.</h1><p>Olivier, Sorya, Paddy and Gaston.<br>Eighteen days. ${tripDistance} kilometres.<br>A few changes of plan.</p><a class="button sun" href="#stories">Read our adventure <span aria-hidden="true">↗</span></a></div>
     </section>
     <div class="stat-strip">${stat(tripDistance,'kilometres travelled')}${stat('18','days of adventure')}${stat('7','countries crossed')}${stat('1','very important Pomeranian')}</div>
