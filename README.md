@@ -6,7 +6,7 @@ Live site: https://opedoussaut.github.io/lofoten-2026-roadbook/
 
 ## Published experience
 
-- Introduction and crew, using the approved cartoon illustration.
+- Introduction and crew, with the complete approved cartoon illustration displayed at the top, unobstructed on desktop and mobile.
 - Plan vs Reality: the saved A/B road-only itineraries compared with all 18 actual days.
 - Daily Stories: the complete English journal, individual day links, expand-all and printing.
 - Gaston: recorded identity and pickup mileage, model-reference specifications, mechanical incidents, initial-condition summary and handover epilogue.
@@ -25,7 +25,7 @@ GitHub Pages publishes `main` from the repository root. Existing historical modu
 
 ## Data boundaries
 
-The 8,700 km trip total is approximate. The return odometer of about 59,313 km is an inference from the recorded 50,613 km pickup value, not a measured handover reading. Vehicle dimensions and capacities are stored model/category references. Final handover completion and repair outcomes are not assumed.
+The trip total is 8,500 km, corrected by Olivier on 12 September. The return odometer of about 59,113 km is an inference from the recorded 50,613 km pickup value, not a measured handover reading. The application uses one trip-distance constant for its figures. Vehicle dimensions and capacities are stored model/category references. Final handover completion and repair outcomes are not assumed.
 
 Budget dates may be posting dates. Refunds stay netted once; declined payments and the refundable deposit are excluded. Remaining reconciliation questions are visible in the Budget tab. If the expense source changes, add matching English labels for the new rows.
 

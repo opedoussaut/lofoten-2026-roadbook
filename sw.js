@@ -1,6 +1,6 @@
-const CACHE = 'lofoten-2026-final-1';
-const VERSION = '2026-final-1';
-const CORE = ['./', './index.html', `roadbook-final.css?v=${VERSION}`, `roadbook-final.js?v=${VERSION}`, `journal-en.json?v=${VERSION}`, `route-plans-en.json?v=${VERSION}`, `expenses-current.json?v=${VERSION}`, `expense-labels-en.json?v=${VERSION}`, `manifest.webmanifest?v=${VERSION}`, 'assets/crew-hero.webp'];
+const CACHE = 'lofoten-2026-final-2';
+const VERSION = '2026-final-2';
+const CORE = ['./', './index.html', `roadbook-final.css?v=${VERSION}`, `roadbook-final.js?v=${VERSION}`, `journal-en.json?v=${VERSION}`, `route-plans-en.json?v=${VERSION}`, `expenses-current.json?v=${VERSION}`, `expense-labels-en.json?v=${VERSION}`, `manifest.webmanifest?v=${VERSION}`, `assets/crew-hero.webp?v=${VERSION}`];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(CORE)).then(() => self.skipWaiting()));
 });
