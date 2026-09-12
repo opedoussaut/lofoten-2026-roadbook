@@ -1,34 +1,34 @@
-# Lofoten 2026 Roadbook
+# Lofoten 2026 — The Paddy Expedition
 
-Application web progressive pour piloter le road trip du 25 août au 11 septembre 2026.
+Final English roadbook for Olivier, Sorya, Paddington and Gaston: 25 August–11 September 2026, with the final fuel fill recorded on 12 September.
 
-## Fonctions
+Live site: https://opedoussaut.github.io/lofoten-2026-roadbook/
 
-- itinéraire modifiable ;
-- activités famille et options Olivier ;
-- carte Leaflet/OpenStreetMap ;
-- suivi du van ;
-- journal de bord ;
-- budget ;
-- suivi GPS lorsque la page reste active ;
-- fonctionnement hors ligne ;
-- synchronisation Google Sheets après configuration OAuth.
+## Published experience
 
-## Configuration Google Sheets
+- Introduction and crew, using the approved cartoon illustration.
+- Plan vs Reality: the saved A/B road-only itineraries compared with all 18 actual days.
+- Daily Stories: the complete English journal, individual day links, expand-all and printing.
+- Gaston: recorded identity and pickup mileage, model-reference specifications, mechanical incidents, initial-condition summary and handover epilogue.
+- Budget: the live expense ledger with English details, categories and reconciliation notes. The Reservations tab is retired.
 
-1. Créer un projet dans Google Cloud Console.
-2. Activer **Google Sheets API**.
-3. Configurer l’écran de consentement OAuth.
-4. Créer un identifiant OAuth de type **Application Web**.
-5. Ajouter l’origine JavaScript autorisée :
-   `https://opedoussaut.github.io`
-6. Copier le Client ID dans `config.js`, propriété `googleClientId`.
-7. Vérifier que `spreadsheetId` pointe sur le classeur Google Sheets du roadbook.
+## Active files
 
-Aucun secret client ne doit être ajouté au dépôt public.
+- `index.html`, `roadbook-final.css`, `roadbook-final.js`: static application, with no build step.
+- `journal-en.json`: full English stories. Original French accounts remain in `journal-current.json` and `journal-day13.json`–`journal-day18.json`.
+- `route-plans-en.json`: English presentation of the saved plans in `roadbook-plan.js`. Planned kilometres and hours are retained as estimates. Actual daily driving distances are not invented.
+- `expenses-current.json`: authoritative expense amounts. `expense-labels-en.json` translates each exact source row without changing its financial value.
+- `assets/crew-hero.webp`: approved illustrated crew, optimised for the web. Original personal photographs are not needed by the application.
+- `sw.js`, `manifest.webmanifest`: versioned offline cache and English application metadata.
 
-## Publication
+GitHub Pages publishes `main` from the repository root. Existing historical modules and French source data are retained for traceability; they are not loaded by the final application.
 
-GitHub Pages doit publier la branche `main`, dossier `/ (root)`.
+## Data boundaries
 
-Site : https://opedoussaut.github.io/lofoten-2026-roadbook/
+The 8,700 km trip total is approximate. The return odometer of about 59,313 km is an inference from the recorded 50,613 km pickup value, not a measured handover reading. Vehicle dimensions and capacities are stored model/category references. Final handover completion and repair outcomes are not assumed.
+
+Budget dates may be posting dates. Refunds stay netted once; declined payments and the refundable deposit are excluded. Remaining reconciliation questions are visible in the Budget tab. If the expense source changes, add matching English labels for the new rows.
+
+## Validation
+
+Check JavaScript syntax, JSON validity, the 18-day chronology, original-plan totals, exact expense-translation matches and referenced local assets before publication. After publication, check the GitHub Pages deployment status and the live entry point.

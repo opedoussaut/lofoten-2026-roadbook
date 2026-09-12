@@ -1,9 +1,10 @@
 {
-  "name":"Lofoten 2026 Roadbook",
+  "name":"Lofoten 2026 — The Paddy Expedition",
   "short_name":"Lofoten 2026",
   "start_url":"./",
   "display":"standalone",
-  "background_color":"#f4f7f8",
-  "theme_color":"#153047",
-  "description":"Roadbook dynamique du voyage aux Lofoten 2026"
+  "background_color":"#faf6eb",
+  "theme_color":"#0b2c35",
+  "lang":"en",
+  "description":"Eighteen days from Paris to the Lofoten Islands and back with Olivier, Sorya, Paddy and Gaston."
 }

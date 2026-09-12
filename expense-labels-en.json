@@ -1,0 +1,301 @@
+{
+  "source": "expenses-current.json",
+  "sourceUpdatedAt": "2026-09-12T07:52:00+02:00",
+  "entries": [
+    {
+      "sourceSignature": "[\"Transport\",2195,\"Roadsurfer\",\"Location camping-car Cozy Cottage · payé intégralement avant départ (1 914 € + 281 €) · caution exclue\",\"2026-08-21\"]",
+      "place": "Roadsurfer",
+      "note": "Cozy Cottage rental paid before departure (€1,914 + €281). Refundable deposit excluded."
+    },
+    {
+      "sourceSignature": "[\"Courses / alimentation\",17.9,\"Avant départ\",\"Biscuits Bjorg · 5 paquets · courses Lofoten\",\"2026-08-21\"]",
+      "place": "Before departure",
+      "note": "Bjorg biscuits, five packs, purchased before departure."
+    },
+    {
+      "sourceSignature": "[\"Courses / alimentation\",11.84,\"Avant départ\",\"Nescafé Espresso Intenso · 2 boîtes · courses Lofoten\",\"2026-08-21\"]",
+      "place": "Before departure",
+      "note": "Nescafé Espresso Intenso, two jars, purchased before departure."
+    },
+    {
+      "sourceSignature": "[\"Courses / alimentation\",250,\"Avant départ\",\"Courses diverses préparées pour le voyage Lofoten\",\"2026-08-21\"]",
+      "place": "Before departure",
+      "note": "Other groceries prepared before the trip."
+    },
+    {
+      "sourceSignature": "[\"Camping / nuit\",30,\"Bispingen\",\"Première nuit du roadtrip · aire/camping\",\"2026-08-25\"]",
+      "place": "Bispingen",
+      "note": "First overnight stop of the road trip."
+    },
+    {
+      "sourceSignature": "[\"Péage / pont / tunnel\",23.9,\"France\",\"Péage trajet aller\",\"2026-08-25\"]",
+      "place": "France",
+      "note": "French toll on the outbound journey."
+    },
+    {
+      "sourceSignature": "[\"Carburant\",136,\"Allemagne\",\"Plein du jour 1 · 44 L mentionnés dans le récit\",\"2026-08-25\"]",
+      "place": "Germany",
+      "note": "Day 1 fuel payment; 44 L mentioned in the account."
+    },
+    {
+      "sourceSignature": "[\"Péage / pont / tunnel\",139.13,\"Øresund\",\"Passage du pont · montant payé 1 040 DKK · conversion indicative au taux BCE du 28/08/2026 : 1 EUR = 7,4748 DKK\",\"2026-08-26\"]",
+      "place": "Øresund",
+      "note": "Outbound crossing: DKK 1,040. Original indicative conversion retained."
+    },
+    {
+      "sourceSignature": "[\"Péage / pont / tunnel\",86.29,\"Storebælt\",\"Passage du pont · montant payé 645 DKK · conversion indicative au taux BCE du 28/08/2026 : 1 EUR = 7,4748 DKK\",\"2026-08-26\"]",
+      "place": "Storebælt",
+      "note": "Outbound crossing: DKK 645. Original indicative conversion retained."
+    },
+    {
+      "sourceSignature": "[\"Carburant\",105.81,\"Suède\",\"Montant payé 1 173,25 SEK · conversion indicative au taux BCE du 28/08/2026 : 1 EUR = 11,0885 SEK\",\"2026-08-26\"]",
+      "place": "Sweden",
+      "note": "Fuel payment: SEK 1,173.25. Original indicative conversion retained."
+    },
+    {
+      "sourceSignature": "[\"Carburant\",100,\"\",\"Autre plein de carburant explicitement enregistré le jour 2\",\"2026-08-26\"]",
+      "place": "Not recorded",
+      "note": "Additional fuel payment explicitly recorded for Day 2."
+    },
+    {
+      "sourceSignature": "[\"Camping / nuit\",25,\"Suède\",\"Nuit du jour 2\",\"2026-08-26\"]",
+      "place": "Sweden",
+      "note": "Second overnight stop."
+    },
+    {
+      "sourceSignature": "[\"Courses / alimentation\",107.21,\"Suède\",\"Montant payé : 1 189 SEK · conversion indicative au taux 1 EUR = 11,09 SEK du 28/08/2026\",\"2026-08-28\"]",
+      "place": "Sweden",
+      "note": "Groceries: SEK 1,189. Original indicative conversion retained."
+    },
+    {
+      "sourceSignature": "[\"Camping / nuit\",45.61,\"\",\"Camping\",\"2026-08-28\"]",
+      "place": "Not recorded",
+      "note": "Campsite payment."
+    },
+    {
+      "sourceSignature": "[\"Carburant\",107,\"\",\"Essence\",\"2026-08-28\"]",
+      "place": "Not recorded",
+      "note": "Fuel payment."
+    },
+    {
+      "sourceSignature": "[\"Courses / alimentation\",107.55,\"Suède\",\"Nourriture pour Paddy · montant payé : 1 194,40 SEK · conversion indicative au taux moyen de marché 1 SEK = 0,0900462 EUR du 30/08/2026\",\"2026-08-30\"]",
+      "place": "Sweden",
+      "note": "Food for Paddy: SEK 1,194.40. Original indicative conversion retained."
+    },
+    {
+      "sourceSignature": "[\"Carburant\",57.52,\"Suède / Norvège\",\"Montant corrigé du plein du 30/08 · remplace l'ancien montant de 73,81 € qui ne doit pas être compté en plus\",\"2026-08-30\"]",
+      "place": "Sweden / Norway",
+      "note": "Corrected fuel amount; replaces €73.81, which is not added again."
+    },
+    {
+      "sourceSignature": "[\"Carburant\",77.73,\"Norvège\",\"Montant payé 844,07 NOK · conversion indicative au taux BCE du 28/08/2026 : 1 EUR = 10,8595 NOK\",\"2026-08-30\"]",
+      "place": "Norway",
+      "note": "Fuel payment: NOK 844.07. Original indicative conversion retained."
+    },
+    {
+      "sourceSignature": "[\"Camping / nuit\",41.44,\"Sandsletta Camping\",\"Montant payé 450 NOK · conversion indicative au taux BCE du 28/08/2026 : 1 EUR = 10,8595 NOK\",\"2026-08-30\"]",
+      "place": "Sandsletta Camping",
+      "note": "Campsite payment: NOK 450. Original indicative conversion retained."
+    },
+    {
+      "sourceSignature": "[\"Services camping-car\",3.68,\"Sandsletta Camping\",\"Douches · 40 NOK · conversion indicative au taux BCE du 28/08/2026 : 1 EUR = 10,8595 NOK\",\"2026-08-30\"]",
+      "place": "Sandsletta Camping",
+      "note": "Showers: NOK 40. Original indicative conversion retained."
+    },
+    {
+      "sourceSignature": "[\"Parking\",16.28,\"Hauklandstranda\",\"Parking Haukland · jour 7\",\"2026-08-31\"]",
+      "place": "Hauklandstranda",
+      "note": "Haukland parking, Day 7."
+    },
+    {
+      "sourceSignature": "[\"Restaurant / café\",55.38,\"Haukland\",\"Café + banana bread + livre · jour 7\",\"2026-08-31\"]",
+      "place": "Haukland",
+      "note": "Coffee, banana bread and a book, Day 7."
+    },
+    {
+      "sourceSignature": "[\"Camping / nuit\",54.92,\"Ramberg\",\"Camping · jour 7\",\"2026-08-31\"]",
+      "place": "Ramberg",
+      "note": "Campsite payment, Day 7."
+    },
+    {
+      "sourceSignature": "[\"Courses / alimentation\",12.48,\"Å\",\"Boulangerie traditionnelle · jour 8\",\"2026-09-01\"]",
+      "place": "Å",
+      "note": "Traditional bakery, Day 8."
+    },
+    {
+      "sourceSignature": "[\"Carburant\",92.75,\"Statoil\",\"Montant réellement payé après remboursement partiel : 184,82 € - 92,07 €\",\"2026-09-01\"]",
+      "place": "Statoil",
+      "note": "Net fuel cost: €184.82 debit less €92.07 refund."
+    },
+    {
+      "sourceSignature": "[\"Camping / nuit\",106.74,\"Moskenes Camping\",\"Deux nuits · paiement final effectué avec une autre carte ; transaction déclinée non comptée en double\",\"2026-09-03\"]",
+      "place": "Moskenes Camping",
+      "note": "Two nights paid on another card. Declined transaction excluded."
+    },
+    {
+      "sourceSignature": "[\"Kayak\",119.59,\"Saga Adventures\",\"Kayak confirmé et payé · dépense retrouvée lors de la vérification complète\",\"2026-09-03\"]",
+      "place": "Saga Adventures",
+      "note": "Confirmed, paid kayak booking recovered during the expense review."
+    },
+    {
+      "sourceSignature": "[\"Courses / alimentation\",10.11,\"Hansines Bakeri\",\"Dépense du jour\",\"2026-09-03\"]",
+      "place": "Hansines Bakeri",
+      "note": "Purchase recorded for this day."
+    },
+    {
+      "sourceSignature": "[\"Courses / alimentation\",24.03,\"Landhandleriet\",\"Dépense du jour\",\"2026-09-03\"]",
+      "place": "Landhandleriet",
+      "note": "Purchase recorded for this day."
+    },
+    {
+      "sourceSignature": "[\"Activité / visite\",27.83,\"Nusfjord Village\",\"Dépense du jour\",\"2026-09-03\"]",
+      "place": "Nusfjord Village",
+      "note": "Village admission recorded for this day."
+    },
+    {
+      "sourceSignature": "[\"Courses / alimentation\",16.67,\"Moskenes\",\"Dépense du jour\",\"2026-09-03\"]",
+      "place": "Moskenes",
+      "note": "Purchase recorded for this day."
+    },
+    {
+      "sourceSignature": "[\"Restaurant / café\",26.49,\"Bringen Kaffebar\",\"Dépense du jour\",\"2026-09-03\"]",
+      "place": "Bringen Kaffebar",
+      "note": "Café purchase recorded for this day."
+    },
+    {
+      "sourceSignature": "[\"Activité / visite\",12.48,\"Norsk Fiskevær\",\"Dépense du jour\",\"2026-09-03\"]",
+      "place": "Norsk Fiskevær",
+      "note": "Visit recorded for this day."
+    },
+    {
+      "sourceSignature": "[\"Camping / nuit\",35.21,\"Camp Alta · Kiruna\",\"390 SEK · transaction débitée le 5 septembre\",\"2026-09-05\"]",
+      "place": "Camp Alta · Kiruna",
+      "note": "SEK 390; transaction posted on 5 September."
+    },
+    {
+      "sourceSignature": "[\"Carburant\",124.94,\"Esso\",\"Coût net : débit 278,37 € (3 000 NOK) moins remboursement 153,43 € (1 346,53 NOK). Refund compté une seule fois.\",\"2026-09-05\"]",
+      "place": "Esso",
+      "note": "Net cost: €278.37 debit less €153.43 refund. Refund counted once; original foreign-currency wording requires reconciliation."
+    },
+    {
+      "sourceSignature": "[\"Restaurant / café\",36.93,\"Zettle · Sigurd…\",\"398 NOK · libellé bancaire partiel ; transaction unique\",\"2026-09-05\"]",
+      "place": "Zettle · Sigurd…",
+      "note": "NOK 398; partial bank merchant description; distinct transaction."
+    },
+    {
+      "sourceSignature": "[\"Restaurant / café\",25.98,\"Zettle · Sigurd…\",\"280 NOK · libellé bancaire partiel ; transaction unique\",\"2026-09-05\"]",
+      "place": "Zettle · Sigurd…",
+      "note": "NOK 280; partial bank merchant description; distinct transaction."
+    },
+    {
+      "sourceSignature": "[\"Achats / souvenirs\",138.63,\"Zettle · Lilleki…\",\"1 494 NOK · libellé bancaire partiel ; transaction unique\",\"2026-09-05\"]",
+      "place": "Zettle · Lilleki…",
+      "note": "NOK 1,494; partial bank merchant description; distinct transaction."
+    },
+    {
+      "sourceSignature": "[\"Achats / souvenirs\",5.47,\"Galleri Lofo…\",\"59 NOK · libellé bancaire partiel ; transaction unique\",\"2026-09-05\"]",
+      "place": "Galleri Lofo…",
+      "note": "NOK 59; partial bank merchant description; distinct transaction."
+    },
+    {
+      "sourceSignature": "[\"Transport / autre\",6.5,\"Misværhola\",\"70 NOK · transaction unique n°1 ; nature exacte à préciser\",\"2026-09-05\"]",
+      "place": "Misværhola",
+      "note": "NOK 70; first distinct debit. Exact expense type still unconfirmed."
+    },
+    {
+      "sourceSignature": "[\"Achats / souvenirs\",36.47,\"Zettle · Lillekio…\",\"393 NOK · libellé bancaire partiel ; transaction unique\",\"2026-09-05\"]",
+      "place": "Zettle · Lillekio…",
+      "note": "NOK 393; partial bank merchant description; distinct transaction."
+    },
+    {
+      "sourceSignature": "[\"Transport / autre\",6.5,\"Misværhola\",\"70 NOK · transaction unique n°2 ; deux débits distincts visibles\",\"2026-09-05\"]",
+      "place": "Misværhola",
+      "note": "NOK 70; second distinct debit, separately visible in the statement."
+    },
+    {
+      "sourceSignature": "[\"Carburant\",96.55,\"Skoogs Bränsle\",\"1 069,51 SEK · débit confirmé ; opération à 270,83 € déclinée exclue\",\"2026-09-06\"]",
+      "place": "Skoogs Bränsle",
+      "note": "SEK 1,069.51 confirmed debit; declined €270.83 operation excluded."
+    },
+    {
+      "sourceSignature": "[\"Carburant\",64.14,\"Preem Docks\",\"710,45 SEK · débit confirmé\",\"2026-09-07\"]",
+      "place": "Preem Docks",
+      "note": "SEK 710.45 confirmed debit."
+    },
+    {
+      "sourceSignature": "[\"Transport public\",7.76,\"SL.se\",\"86 SEK · billet transport Stockholm\",\"2026-09-08\"]",
+      "place": "SL.se",
+      "note": "SEK 86; Stockholm public-transport ticket."
+    },
+    {
+      "sourceSignature": "[\"Restaurant / café\",15.33,\"Rosendals\",\"170 SEK · Stockholm\",\"2026-09-08\"]",
+      "place": "Rosendals",
+      "note": "SEK 170; Stockholm."
+    },
+    {
+      "sourceSignature": "[\"Restaurant / café\",29.22,\"PayPal · Carpe…\",\"324 SEK · Stockholm · libellé bancaire partiel\",\"2026-09-08\"]",
+      "place": "PayPal · Carpe…",
+      "note": "SEK 324; Stockholm; partial bank merchant description."
+    },
+    {
+      "sourceSignature": "[\"Transport public\",7.76,\"SL.se\",\"86 SEK · deuxième billet transport Stockholm\",\"2026-09-08\"]",
+      "place": "SL.se",
+      "note": "SEK 86; second Stockholm public-transport ticket."
+    },
+    {
+      "sourceSignature": "[\"Camping / nuit\",79.92,\"Bredäng Camping\",\"890 SEK · débit en cours de traitement\",\"2026-09-09\"]",
+      "place": "Bredäng Camping",
+      "note": "SEK 890; processing when recorded. Posting date differs from stay."
+    },
+    {
+      "sourceSignature": "[\"Courses / alimentation\",85.19,\"Coop Sweden\",\"948,78 SEK · débit en cours de traitement\",\"2026-09-09\"]",
+      "place": "Coop Sweden",
+      "note": "SEK 948.78; processing when recorded."
+    },
+    {
+      "sourceSignature": "[\"Achats Paddy\",112.17,\"Arken Zoo\",\"1 249,17 SEK · achat pour Paddy · débit en cours de traitement\",\"2026-09-09\"]",
+      "place": "Arken Zoo",
+      "note": "SEK 1,249.17; Paddy supplies; processing when recorded."
+    },
+    {
+      "sourceSignature": "[\"Carburant\",117.03,\"St1\",\"1 303,37 SEK · plein du trajet retour\",\"2026-09-09\"]",
+      "place": "St1",
+      "note": "SEK 1,303.37; fuel on the return journey."
+    },
+    {
+      "sourceSignature": "[\"Péage / pont / tunnel\",139.15,\"Øresundsbron\",\"1 040 DKK · passage retour vers le Danemark · débit en cours de traitement\",\"2026-09-09\"]",
+      "place": "Øresundsbron",
+      "note": "DKK 1,040; return to Denmark; processing when recorded."
+    },
+    {
+      "sourceSignature": "[\"Camping / nuit\",39.47,\"Feddet Strand Resort\",\"295 DKK · dernière étape au Danemark · débit en cours de traitement\",\"2026-09-10\"]",
+      "place": "Feddet Strand Resort",
+      "note": "DKK 295; last Danish campsite; processing when recorded. Posted after the stay."
+    },
+    {
+      "sourceSignature": "[\"Carburant\",56.94,\"Go’on\",\"Coût net : débit 100,35 € (750 DKK) moins remboursement 43,41 € (425,61 DKK) · remboursement compté une seule fois\",\"2026-09-10\"]",
+      "place": "Go’on",
+      "note": "Net cost: €100.35 debit less €43.41 refund. Refund counted once; foreign-currency wording remains to reconcile."
+    },
+    {
+      "sourceSignature": "[\"Péage / pont / tunnel\",86.3,\"Storebælt\",\"645 DKK · passage retour · débit en cours de traitement\",\"2026-09-10\"]",
+      "place": "Storebælt",
+      "note": "DKK 645; return crossing; processing when recorded."
+    },
+    {
+      "sourceSignature": "[\"Carburant\",149.84,\"Esso\",\"Dernier plein du trajet retour · débit confirmé\",\"2026-09-11\"]",
+      "place": "Esso",
+      "note": "Final recorded return-journey fuel payment; confirmed debit."
+    },
+    {
+      "sourceSignature": "[\"Péage / pont / tunnel\",27.5,\"Sanef\",\"Dourges → Paris (Roissy) · classe 2 · 168,1 km · reçu du 11/09/2026 à 15:40\",\"2026-09-11\"]",
+      "place": "Sanef",
+      "note": "Dourges to Paris/Roissy toll, class 2, 168.1 km; 11 September at 15:40."
+    },
+    {
+      "sourceSignature": "[\"Carburant\",130.84,\"Intermarché Magny-les-Hameaux\",\"Plein final avant restitution de Gaston · 56,42 L de gazole à 2,319 €/L · ticket du 12/09/2026 à 07:50\",\"2026-09-12\"]",
+      "place": "Intermarché Magny-les-Hameaux",
+      "note": "Final fuel fill before returning Gaston: 56.42 L of diesel at €2.319/L, 12 September at 07:50."
+    }
+  ]
+}
