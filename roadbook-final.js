@@ -1,7 +1,7 @@
 'use strict';
 
 (() => {
-  const VERSION = '2026-final-3';
+  const VERSION = '2026-final-4';
   const TRIP_KM = 8500;
   const PICKUP_ODOMETER_KM = 50613;
   const tripDistance = TRIP_KM.toLocaleString('en-GB');
