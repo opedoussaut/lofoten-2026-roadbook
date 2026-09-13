@@ -6,6 +6,7 @@
     ["Courses / alimentation",250,"Avant départ","Courses diverses préparées pour le voyage Lofoten","2026-08-21"],
     ["Camping / nuit",30,"Bispingen","Première nuit du roadtrip · aire/camping","2026-08-25"],
     ["Péage / pont / tunnel",23.9,"France","Péage trajet aller","2026-08-25"],
+    ["Carburant",106.45,"Bispingen","Premier arrêt carburant du voyage · montant payé par carte selon le ticket","2026-08-25"],
     ["Carburant",136,"Allemagne","Plein du jour 1 · 44 L mentionnés dans le récit","2026-08-25"],
     ["Péage / pont / tunnel",139.13,"Øresund","Passage du pont · montant payé 1 040 DKK · conversion indicative au taux BCE du 28/08/2026 : 1 EUR = 7,4748 DKK","2026-08-26"],
     ["Péage / pont / tunnel",86.29,"Storebælt","Passage du pont · montant payé 645 DKK · conversion indicative au taux BCE du 28/08/2026 : 1 EUR = 7,4748 DKK","2026-08-26"],
@@ -60,5 +61,5 @@
     ["Péage / pont / tunnel",27.5,"Sanef","Dourges → Paris (Roissy) · classe 2 · 168,1 km · reçu du 11/09/2026 à 15:40","2026-09-11"],
     ["Carburant",130.84,"Intermarché Magny-les-Hameaux","Plein final avant restitution de Gaston · 56,42 L de gazole à 2,319 €/L · ticket du 12/09/2026 à 07:50","2026-09-12"]
   ],
-  "updatedAt": "2026-09-12T07:52:00+02:00"
+  "updatedAt": "2026-09-13T17:15:00+02:00"
 }
