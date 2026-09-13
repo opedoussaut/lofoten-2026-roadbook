@@ -1,6 +1,6 @@
 {
   "source": "expenses-current.json",
-  "sourceUpdatedAt": "2026-09-12T07:52:00+02:00",
+  "sourceUpdatedAt": "2026-09-13T17:15:00+02:00",
   "entries": [
     {
       "sourceSignature": "[\"Transport\",2195,\"Roadsurfer\",\"Location camping-car Cozy Cottage · payé intégralement avant départ (1 914 € + 281 €) · caution exclue\",\"2026-08-21\"]",
@@ -31,6 +31,11 @@
       "sourceSignature": "[\"Péage / pont / tunnel\",23.9,\"France\",\"Péage trajet aller\",\"2026-08-25\"]",
       "place": "France",
       "note": "French toll on the outbound journey."
+    },
+    {
+      "sourceSignature": "[\"Carburant\",106.45,\"Bispingen\",\"Premier arrêt carburant du voyage · montant payé par carte selon le ticket\",\"2026-08-25\"]",
+      "place": "Bispingen",
+      "note": "First fuel stop of the journey; €106.45 paid by card, confirmed by the receipt."
     },
     {
       "sourceSignature": "[\"Carburant\",136,\"Allemagne\",\"Plein du jour 1 · 44 L mentionnés dans le récit\",\"2026-08-25\"]",
